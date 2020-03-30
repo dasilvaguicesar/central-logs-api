@@ -8,7 +8,7 @@
 
 API está disponível na plataforma Heroku, para utilizar basta acessar:
 
-[API-DOCS - Swagger](central-de-erros-squad3.herokuapp.com/)
+[API-DOCS - Swagger](https://central-de-erros-squad3.herokuapp.com/)
 
 ## Ambiente de desenvolvimento
 
