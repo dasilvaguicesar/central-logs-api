@@ -1,6 +1,6 @@
 {
   "swagger": "2.0",
-  "host": "https://api-central-de-erros.herokuapp.com/api-docs/",
+  "host": "https://api-central-de-erros.herokuapp.com",
   "basePath": "/",
   "info": {
     "version": "1.0.2",
