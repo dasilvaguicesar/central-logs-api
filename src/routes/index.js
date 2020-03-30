@@ -9,7 +9,8 @@ const port = process.env.PORT
 
 router.get('/', (req, res) => {
   res.status(200).json({
-    docs: `http://localhost:${port}/api-docs`
+  "message": "Access the documentation",
+  "docs": "https://api-central-de-erros.herokuapp.com/api-docs"
   })
 })
 
