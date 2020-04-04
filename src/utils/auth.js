@@ -9,9 +9,13 @@ module.exports = {
   },
   decodeToken: (token) => {
     try {
-      const [, tokenSplited] = token.split(' ')
-      
-      return jwt.verify(tokenSplited, process.env.SECRET)
+      const [bearer, splitToken] = token.split(' ')
+
+      if (!bearer || !splitToken && bearer !== 'Bearer') {
+        return { userId: { id: 0 }, iat: 0, exp: 0 }
+      }
+
+      return jwt.verify(splitToken, process.env.SECRET)
     } catch (error) {
       return { userId: { id: 0 }, iat: 0, exp: 0 }
     }
