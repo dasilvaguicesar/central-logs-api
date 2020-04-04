@@ -9,7 +9,7 @@ router.post('/signup', controller.create)
 
 router.post('/signin', authenticate)
 
-router.post('/restore', authenticateForRestoreUser, authorizeForRestoreUser, controller.restore) // juliano
+router.post('/restore', authenticateForRestoreUser, authorizeForRestoreUser, controller.restore)
 
 router.patch('/', authorize, controller.update)
 

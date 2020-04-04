@@ -3,8 +3,8 @@
   "host": "localhost:8080",
   "basePath": "/",
   "info": {
-    "version": "1.0.2",
-    "title": "Central de Erros API",
+    "version": "1.0.3",
+    "title": "API Error Center",
     "description": "Store and retrieve application logs from other applications",
     "license": {
       "name": "MIT",
@@ -21,7 +21,7 @@
     }
   },
   "paths": {
-    "/users/logs": {
+    "/user/logs": {
       "get": {
         "security": [
           {
@@ -109,25 +109,16 @@
               }
             }
           },
-          "_401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
+          "403": {
+            "description": "Returns forbidden",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token not provided"
-                }
-              }
+              "$ref": "forbidden"
             }
           }
         }
       }
     },
-    "/users/signup": {
+    "/user/signup": {
       "post": {
         "summary": "Create user",
         "description": "Create a new user account to get access to the API",
@@ -188,7 +179,7 @@
         }
       }
     },
-    "/users/signin": {
+    "/user/signin": {
       "post": {
         "summary": "User login",
         "description": "Authenticate an existing user returning a token for API requests",
@@ -310,7 +301,7 @@
         }
       }
     },
-    "/users/restore": {
+    "/user/restore": {
       "post": {
         "summary": "User login",
         "description": "Authenticate an existing user returning a token for API requests",
@@ -432,7 +423,7 @@
         }
       }
     },
-    "/users": {
+    "/user": {
       "patch": {
         "summary": "Update user",
         "description": "Update an authenticated user with the new information provided in request body",
@@ -636,7 +627,7 @@
         }
       }
     },
-    "/users/hard": {
+    "/user/hard": {
       "delete": {
         "security": [
           {
@@ -1520,6 +1511,15 @@
             }
           }
         }
+      }
+    }
+  },
+  "forbidden": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Token not provided"
       }
     }
   },

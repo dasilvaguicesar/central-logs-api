@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 router.use('/api-docs', swaggerUi.serve)
 router.get('/api-docs', swaggerUi.setup(swaggerDocument))
-router.use('/users', usersRoute)
+router.use('/user', usersRoute)
 router.use('/logs', authorize, logsRoute)
 
 module.exports = router

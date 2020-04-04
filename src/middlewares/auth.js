@@ -17,7 +17,7 @@ module.exports = {
       })
 
       if (!isValid || typeof email !== 'string' || typeof password !== 'string') {
-        return res.status(406).json({ error: 'Data values are not valid' })
+        return res.status(406).json({ message: 'Data values are not valid' })
       }
 
       const user = await User.findOne({
@@ -103,11 +103,11 @@ module.exports = {
     try {
       const token = req.headers.authorization
       if (!token) {
-        return res.status(401).json({ message: 'Token not provided' })
+        return res.status(403).json({ message: 'Token not provided' })
       }
 
       const [bearer, splitToken] = token.split(' ')
-      if (!bearer || !splitToken) {
+      if (!bearer || !splitToken && bearer !== 'Bearer') {
         return res.status(401).json({ message: 'Invalid token' })
       }
 

@@ -94,7 +94,7 @@ module.exports = {
         where: { id }
       })
 
-      return res.status(200).json({ message: 'User restored successfully.' })
+      return res.status(200).json({ message: 'User restored successfully' })
     } catch (error) {
       return res.status(500).json({ message: 'Internal Server Error' })
     }
