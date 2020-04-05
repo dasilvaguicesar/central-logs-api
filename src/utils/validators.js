@@ -44,13 +44,19 @@ module.exports = {
     return schema
   },
 
-  schemaValidationForAuthenticate: async () => {
+  schemaValidationForAuthenticate: async (body) => {
+    
+    if (typeof body.email !== 'string' || typeof body.password !== 'string'){
+      return false
+    }
+
     const schema = yup.object().shape({
-      email: yup.string().required().email(),
-      password: yup.string().required().min(6)
+      email: yup.string().email().required(),
+      password: yup.string().min(6).required()
     })
-    return schema
+    return await schema.isValid(body)
   },
+  
   updateByItem: async (bodyItem, body, id) => {
     switch (bodyItem) {
       case 'name,email,oldPassword,newPassword,confirmPassword':

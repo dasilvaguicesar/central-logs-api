@@ -66,17 +66,8 @@
           },
           "401": {
             "description": "Returns unauthorized",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid token"
-                }
-              }
+              "$ref": "#/invalid_token"
             }
           },
           "500": {
@@ -99,15 +90,15 @@
             "schema": {
               "type": "object",
               "properties": {
-                  "type": "string",
-                  "example": "{}"
+                "type": "string",
+                "example": "{}"
               }
             }
           },
           "403": {
             "description": "Returns forbidden",
             "schema": {
-              "$ref": "#/forbidden"
+              "$ref": "#/token_not_provided"
             }
           }
         }
@@ -150,13 +141,13 @@
           "201": {
             "description": "Returns confirmation of the created user",
             "schema": {
-              "$ref": "#/create_200"
+              "$ref": "#/user_created_successfully"
             }
           },
           "406": {
             "description": "Returns the message stating that the data sent is invalid",
             "schema": {
-              "$ref": "#/create_406"
+              "$ref": "#/invalid_data"
             }
           },
           "409": {
@@ -219,7 +210,7 @@
             }
           },
           "400": {
-            "description": "Returns Bad Request",
+            "description": "Returns bad request",
             "produces": [
               "application/json"
             ],
@@ -235,51 +226,18 @@
           },
           "401": {
             "description": "Returns unauthorized",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Incorrect password"
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Returns Not Acceptable",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "You are input wrong data then necessary"
-                }
-              }
+              "$ref": "#/incorrect_password"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           },
-          "_406": {
-            "description": "Returns Not Acceptable",
+          "406": {
+            "description": "Returns not acceptable",
             "produces": [
               "application/json"
             ],
@@ -342,17 +300,8 @@
           },
           "401": {
             "description": "Returns unauthorized",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Incorrect password"
-                }
-              }
+              "$ref": "#/incorrect_password"
             }
           },
           "406": {
@@ -514,17 +463,8 @@
           },
           "406": {
             "description": "Returns Not Acceptable",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid data"
-                }
-              }
+              "$ref": "#/invalid_data"
             }
           },
           "500": {
@@ -1004,17 +944,8 @@
           },
           "406": {
             "description": "Returns Not Acceptable",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid data"
-                }
-              }
+              "$ref": "#/invalid_data"
             }
           },
           "500": {
@@ -1494,7 +1425,7 @@
       }
     }
   },
-  "forbidden": {
+  "token_not_provided": {
     "type": "object",
     "properties": {
       "message": {
@@ -1510,7 +1441,7 @@
       "example": "{}"
     }
   },
-  "create_200": {
+  "user_created_successfully": {
     "type": "object",
     "properties": {
       "message": {
@@ -1519,7 +1450,25 @@
       }
     }
   },
-  "create_406": {
+  "invalid_token": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Invalid token"
+      }
+    }
+  },
+  "incorrect_password": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Incorrect password"
+      }
+    }
+  },
+  "invalid_data": {
     "type": "object",
     "properties": {
       "message": {
