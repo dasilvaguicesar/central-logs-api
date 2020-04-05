@@ -29,7 +29,7 @@
           }
         ],
         "summary": "Get all logs by user",
-        "description": "Find and retrieve all the logs sotred by the user. Is necessary to especify 'Bearer' Token.",
+        "description": "Bring all logs registered by the user",
         "produces": [
           "application/json"
         ],

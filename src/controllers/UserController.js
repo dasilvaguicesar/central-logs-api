@@ -57,12 +57,12 @@ module.exports = {
 
       if (typeof hashedPassword === 'string') {
         await User.create({ name, email, password: hashedPassword })
-
         return res.status(201).json({ message: 'User created successfully' })
       } else {
         return res.status(406).json({ message: 'Invalid data' })
       }
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ message: 'Internal Server Error' })
     }
   },
