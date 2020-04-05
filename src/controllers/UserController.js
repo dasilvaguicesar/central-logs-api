@@ -21,7 +21,7 @@ module.exports = {
 
       const hasLogs = Logs.length
       if (!hasLogs) {
-        return res.status(200).json({ message: 'There are no logs' })
+        return res.status(204).json({})
       }
 
       return res.status(200).json({ total: hasLogs, Logs })
@@ -56,16 +56,9 @@ module.exports = {
       const hashedPassword = await generateHashedPassword(password)
 
       if (typeof hashedPassword === 'string') {
-        const { dataValues: { name: userName, email: userEmail, createdAt } } = await User.create({
-          name,
-          email,
-          password: hashedPassword
-        })
+        await User.create({ name, email, password: hashedPassword })
 
-        return res.status(201).json({
-          message: 'User created successfully',
-          data: { userName, userEmail, createdAt }
-        })
+        return res.status(201).json({ message: 'User created successfully' })
       } else {
         return res.status(406).json({ message: 'Invalid data' })
       }

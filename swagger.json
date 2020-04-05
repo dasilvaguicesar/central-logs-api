@@ -28,7 +28,7 @@
             "bearerAuth": []
           }
         ],
-        "summary": "Get all logs",
+        "summary": "Get all logs by user",
         "description": "Find and retrieve all the logs sotred by the user. Is necessary to especify 'Bearer' Token.",
         "produces": [
           "application/json"
@@ -37,7 +37,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -47,7 +47,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Returns the logs ",
             "schema": {
               "type": "object",
               "properties": {
@@ -65,7 +65,7 @@
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
+            "description": "Returns unauthorized",
             "produces": [
               "application/json"
             ],
@@ -94,25 +94,20 @@
               }
             }
           },
-          "_200": {
-            "description": "Returns a message that did not find the logs",
-            "produces": [
-              "application/json"
-            ],
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to display",
             "schema": {
               "type": "object",
               "properties": {
-                "message": {
                   "type": "string",
-                  "example": "There are no logs"
-                }
+                  "example": "{}"
               }
             }
           },
           "403": {
             "description": "Returns forbidden",
             "schema": {
-              "$ref": "forbidden"
+              "$ref": "#/forbidden"
             }
           }
         }
@@ -131,7 +126,7 @@
         "parameters": [
           {
             "in": "body",
-            "name": "user",
+            "name": "User credentials",
             "schema": {
               "type": "object",
               "properties": {
@@ -153,7 +148,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Returns the name, email and date when the user was created",
+            "description": "Returns confirmation of the created user",
             "schema": {
               "$ref": "#/create_200"
             }
@@ -181,7 +176,7 @@
     },
     "/user/signin": {
       "post": {
-        "summary": "User login",
+        "summary": "User login authenticate",
         "description": "Authenticate an existing user returning a token for API requests",
         "produces": [
           "application/json"
@@ -209,7 +204,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the token in the request body",
+            "description": "Returns the token",
             "produces": [
               "application/json"
             ],
@@ -239,7 +234,7 @@
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
+            "description": "Returns unauthorized",
             "produces": [
               "application/json"
             ],
@@ -346,7 +341,7 @@
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
+            "description": "Returns unauthorized",
             "produces": [
               "application/json"
             ],
@@ -437,7 +432,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -503,7 +498,7 @@
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
+            "description": "Returns unauthorized",
             "produces": [
               "application/json"
             ],
@@ -548,7 +543,7 @@
             }
           },
           "_401": {
-            "description": "Returns Unauthorized",
+            "description": "Returns unauthorized",
             "produces": [
               "application/json"
             ],
@@ -563,7 +558,7 @@
             }
           },
           "__401": {
-            "description": "Returns Unauthorized",
+            "description": "Returns unauthorized",
             "produces": [
               "application/json"
             ],
@@ -597,7 +592,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -643,7 +638,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -713,7 +708,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -789,7 +784,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -831,16 +826,10 @@
               }
             }
           },
-          "_200": {
-            "description": "Returns a message stating that there are no logs to show for this user",
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to display for this use",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There are no logs"
-                }
-              }
+              "$ref": "#/emptyLogs"
             }
           }
         }
@@ -865,7 +854,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -923,7 +912,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1059,7 +1048,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1129,7 +1118,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1195,7 +1184,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1250,7 +1239,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1275,7 +1264,7 @@
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
+            "description": "Returns unauthorized",
             "produces": [
               "application/json"
             ],
@@ -1320,7 +1309,7 @@
             }
           },
           "_401": {
-            "description": "Returns Unauthorized",
+            "description": "Returns unauthorized",
             "produces": [
               "application/json"
             ],
@@ -1353,7 +1342,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1426,7 +1415,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1451,7 +1440,7 @@
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
+            "description": "Returns unauthorized",
             "produces": [
               "application/json"
             ],
@@ -1480,23 +1469,14 @@
               }
             }
           },
-          "_200": {
-            "description": "Returns a message that did not find the logs",
-            "produces": [
-              "application/json"
-            ],
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to display",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There are no logs"
-                }
-              }
+              "$ref": "#/emptyLogs"
             }
           },
           "_401": {
-            "description": "Returns Unauthorized",
+            "description": "Returns unauthorized",
             "produces": [
               "application/json"
             ],
@@ -1523,20 +1503,19 @@
       }
     }
   },
+  "emptyLogs": {
+    "type": "object",
+    "properties": {
+      "type": "object",
+      "example": "{}"
+    }
+  },
   "create_200": {
     "type": "object",
     "properties": {
       "message": {
         "type": "string",
         "example": "User created successfully"
-      },
-      "data": {
-        "type": "string",
-        "example": {
-          "userName": "João da Silva",
-          "userEmail": "joao@email.com.br",
-          "createdAt": "2020-03-25T22:21:34.759Z"
-        }
       }
     }
   },

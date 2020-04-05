@@ -69,7 +69,7 @@ describe('The API on /user/logs Endpoint at GET method should...', () => {
     expect(res.statusCode).toEqual(200)
   })
 
-  test('return status 200 and a message when there is no log', async () => {
+  test('return status 204 and a message when there is no log', async () => {
     await request(app)
       .delete('/logs/id/1')
       .set('Authorization', `Bearer ${authorization[0]}`)
@@ -81,8 +81,8 @@ describe('The API on /user/logs Endpoint at GET method should...', () => {
       .get('/user/logs')
       .set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toEqual({ message: 'There are no logs' })
-    expect(res.statusCode).toEqual(200)
+    expect(res.body).toEqual({})
+    expect(res.statusCode).toEqual(204)
   })
 
   test('return status 401 when authorization is incorrect', async () => {
@@ -115,7 +115,7 @@ describe('The API on /user/signup Endpoint at POST method should...', () => {
       .post('/user/signup')
       .send(fakeUsers.create.validData)
 
-      expect(res.body).toEqual(fakeUsers.expected.createdUser)
+      expect(res.body).toEqual({ message: 'User created successfully' })
       expect(res.statusCode).toEqual(201)
   })
 
@@ -1039,12 +1039,12 @@ describe('The API on /logs/hard/:id endpoint at DELETE method should...', () => 
     expect(res.statusCode).toEqual(401)
   })
 
-  test('return status 200 for make sure that there are no logs', async () => {
+  test('returns status 204 and an empty object which means that there are no logs', async () => {
     await request(app).delete('/logs/hard/1').set('Authorization', `Bearer ${authorization[0]}`)
     const res = await request(app).get('/user/logs').set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toEqual({ message: 'There are no logs' })
-    expect(res.statusCode).toEqual(200)
+    expect(res.body).toEqual({})
+    expect(res.statusCode).toEqual(204)
   })
 })
 
@@ -1095,14 +1095,14 @@ describe('The API on /logs/all/hard endpoint at DELETE method should...', () => 
     expect(res.statusCode).toEqual(401)
   })
 
-  test('return status 200 for make sure that there are no logs', async () => {
+  test('returns status 204 and an empty object which means that there are no logs', async () => {
     await createLog(fakeLogs.create.validLog)
     await createLog(fakeLogs.create.validLog)
 
     await request(app).delete('/logs/all/hard').set('Authorization', `Bearer ${authorization[0]}`)
     const res = await request(app).get('/user/logs').set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toEqual({ message: 'There are no logs' })
-    expect(res.statusCode).toEqual(200)
+    expect(res.body).toEqual({})
+    expect(res.statusCode).toEqual(204)
   })
 })

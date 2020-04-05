@@ -129,16 +129,6 @@ const fakeUsers = {
       newPassword: '12345678',
       confirmPassword: '12345678'
     }
-  },
-  expected: {
-    createdUser: {
-      data: {
-        createdAt: '2020-02-15T18:01:01.000Z',
-        userEmail: 'user@email.com',
-        userName: 'User Example'
-      },
-      message: 'User created successfully'
-    }
   }
 }
 
