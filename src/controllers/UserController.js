@@ -80,7 +80,7 @@ module.exports = {
       })
 
       if (!user) {
-        return res.status(200).json({ message: 'There is no user' })
+        return res.status(204).json({ message: 'There is no user' })
       }
 
       await User.restore({
@@ -121,7 +121,7 @@ module.exports = {
       if (dataToBeUpdated.indexOf('oldPassword') !== -1) {
         const passwordMatch = await compareHash(body.oldPassword, user.password)
         if (!passwordMatch) {
-          return res.status(401).json({ message: 'Password does not match' })
+          return res.status(412).json({ message: 'Password does not match' })
         }
 
         const hashedPassword = await generateHashedPassword(body.newPassword)
@@ -149,7 +149,7 @@ module.exports = {
         where: { id }
       })
       if (!userExists) {
-        return res.status(200).json({ message: 'There is no user' })
+        return res.status(204).json({ message: 'There is no user' })
       }
 
       await Log.destroy({
@@ -176,7 +176,7 @@ module.exports = {
       })
 
       if (!userExists) {
-        return res.status(200).json({ message: 'There is no user' })
+        return res.status(204).json({ message: 'There is no user' })
       }
       await Log.destroy({
         where: { UserId: id },

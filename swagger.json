@@ -1,7 +1,5 @@
 {
   "swagger": "2.0",
-  "host": "localhost:8080",
-  "basePath": "/",
   "info": {
     "version": "1.0.3",
     "title": "API Error Center",
@@ -11,6 +9,8 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   },
+  "host": "localhost:8080",
+  "basePath": "/",
   "components": {
     "securitySchemes": {
       "bearerAuth": {
@@ -23,6 +23,9 @@
   "paths": {
     "/user/logs": {
       "get": {
+        "tags": [
+          "User"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -72,17 +75,8 @@
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           },
           "204": {
@@ -106,6 +100,9 @@
     },
     "/user/signup": {
       "post": {
+        "tags": [
+          "User"
+        ],
         "summary": "Create user",
         "description": "Create a new user account to get access to the API",
         "consumes": [
@@ -167,6 +164,9 @@
     },
     "/user/signin": {
       "post": {
+        "tags": [
+          "User"
+        ],
         "summary": "User login authenticate",
         "description": "Authenticate an existing user returning a token for API requests",
         "produces": [
@@ -256,6 +256,9 @@
     },
     "/user/restore": {
       "post": {
+        "tags": [
+          "User"
+        ],
         "summary": "User login",
         "description": "Authenticate an existing user returning a token for API requests",
         "produces": [
@@ -293,7 +296,7 @@
               "properties": {
                 "token": {
                   "type": "string",
-                  "example": "User restored successfully."
+                  "example": "User restored successfully"
                 }
               }
             }
@@ -304,53 +307,26 @@
               "$ref": "#/incorrect_password"
             }
           },
-          "406": {
-            "description": "Returns Not Acceptable",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "You are input wrong data then necessary"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
+            "schema": {
+              "$ref": "#/error_500"
+            }
+          },
+          "204": {
+            "description": "Returns no content",
             "schema": {
               "type": "object",
               "properties": {
                 "message": {
                   "type": "string",
-                  "example": "Internal Server Error"
+                  "example": "{}"
                 }
               }
             }
           },
-          "_200": {
-            "description": "Returns Bad Request",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no user"
-                }
-              }
-            }
-          },
-          "_406": {
-            "description": "Returns Not Acceptable",
+          "406": {
+            "description": "Returns not acceptable",
             "produces": [
               "application/json"
             ],
@@ -369,6 +345,9 @@
     },
     "/user": {
       "patch": {
+        "tags": [
+          "User"
+        ],
         "summary": "Update user",
         "description": "Update an authenticated user with the new information provided in request body",
         "consumes": [
@@ -441,13 +420,13 @@
               "properties": {
                 "message": {
                   "type": "string",
-                  "example": "There is no user"
+                  "example": "{}"
                 }
               }
             }
           },
-          "401": {
-            "description": "Returns unauthorized",
+          "412": {
+            "description": "Precondition failed",
             "produces": [
               "application/json"
             ],
@@ -469,20 +448,11 @@
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           },
-          "_401": {
+          "401": {
             "description": "Returns unauthorized",
             "produces": [
               "application/json"
@@ -497,8 +467,8 @@
               }
             }
           },
-          "__401": {
-            "description": "Returns unauthorized",
+          "403": {
+            "description": "Returns forbidden",
             "produces": [
               "application/json"
             ],
@@ -515,6 +485,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "User"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -553,10 +526,10 @@
               "$ref": "#/error_500"
             }
           },
-          "_200": {
-            "description": "Returns the message stating that the user no longer exists",
+          "204": {
+            "description": "Returns an empty object signaling that the user no longer exists",
             "schema": {
-              "$ref": "#/delete_200_"
+              "$ref": "#/status_204"
             }
           }
         }
@@ -564,6 +537,9 @@
     },
     "/user/hard": {
       "delete": {
+        "tags": [
+          "User"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -604,32 +580,14 @@
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           },
-          "_200": {
-            "description": "Returns a message that did not find a user",
-            "produces": [
-              "application/json"
-            ],
+          "204": {
+            "description": "Returns an empty object signaling that the user no longer exists",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no user"
-                }
-              }
+              "$ref": "#/status_204"
             }
           }
         }
@@ -637,6 +595,9 @@
     },
     "/logs/sender/{senderApplication}": {
       "get": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -661,13 +622,13 @@
             "schema": {
               "type": "string",
               "required": true,
-              "example": "Server load monitor"
+              "example": "Application name"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Returns all logs by application",
             "schema": {
               "type": "object",
               "properties": {
@@ -685,27 +646,15 @@
             }
           },
           "204": {
-            "description": "There is no logs for the informed application",
+            "description": "There are no records for the reported application",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no log"
-                }
-              }
+              "$ref": "#/status_204"
             }
           },
           "500": {
-            "description": "Error on the server side",
+            "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           }
         }
@@ -713,6 +662,9 @@
     },
     "/logs/environment/{environment}": {
       "get": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -746,7 +698,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Show all logs",
+            "description": "Returns all logs by environment",
             "schema": {
               "type": "array",
               "items": {
@@ -755,21 +707,15 @@
             }
           },
           "500": {
-            "description": "Returns a message stating that an error has occurred on the server",
+            "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal server error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           },
           "204": {
             "description": "Returns an empty object, signaling that there are no logs to display for this use",
             "schema": {
-              "$ref": "#/emptyLogs"
+              "$ref": "#/status_204"
             }
           }
         }
@@ -777,6 +723,9 @@
     },
     "/logs/level/{level}": {
       "get": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -824,10 +773,10 @@
               "$ref": "#/error_500"
             }
           },
-          "_200": {
+          "204": {
             "description": "Returns the message stating that there are no logs",
             "schema": {
-              "$ref": "#/getByLevel_200_"
+              "$ref": "#/status_204"
             }
           }
         }
@@ -835,6 +784,9 @@
     },
     "/logs": {
       "post": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -891,7 +843,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns OK",
+            "description": "Returns the created log",
             "produces": [
               "application/json"
             ],
@@ -943,24 +895,15 @@
             }
           },
           "406": {
-            "description": "Returns Not Acceptable",
+            "description": "Returns not acceptable",
             "schema": {
               "$ref": "#/invalid_data"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           }
         }
@@ -968,6 +911,9 @@
     },
     "/logs/restore/id/{id}": {
       "post": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -998,7 +944,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Restore the log with the matching ID if it existed previously. Otherwise do nothing.",
+            "description": "Returns the confirmation of the restored log",
             "schema": {
               "type": "object",
               "properties": {
@@ -1010,27 +956,15 @@
             }
           },
           "204": {
-            "description": "There is no log with informed ID",
+            "description": "Returns an empty object, signaling that there are no logs to display",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no log"
-                }
-              }
+              "$ref": "#/status_204"
             }
           },
           "500": {
-            "description": "Error on the server side",
+            "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal server error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           }
         }
@@ -1038,6 +972,9 @@
     },
     "/logs/restore/all": {
       "post": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -1071,26 +1008,15 @@
             }
           },
           "500": {
-            "description": "Returns a message stating that an error has occurred on the server",
+            "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/error_500"
             }
           },
-          "_200": {
-            "description": "Returns a message stating that there are no logs to restore for this user",
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to display",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There are no logs"
-                }
-              }
+              "$ref": "#/status_204"
             }
           }
         }
@@ -1098,12 +1024,15 @@
     },
     "/logs/id/{id}": {
       "delete": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "summary": "Delete log",
+        "summary": "Soft delete log",
         "description": "Delete the log with the id passed in the url",
         "consumes": [
           "application/json"
@@ -1145,10 +1074,10 @@
               "$ref": "#/error_500"
             }
           },
-          "_200": {
-            "description": "Returns the message stating that there is no log",
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to delete",
             "schema": {
-              "$ref": "#/deleteById_200"
+              "$ref": "#/status_204"
             }
           }
         }
@@ -1156,6 +1085,9 @@
     },
     "/logs/all": {
       "delete": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -1164,7 +1096,7 @@
         "produces": [
           "application/json"
         ],
-        "summary": "Soft Delete for all logs from user.",
+        "summary": "Soft Delete for all logs from user",
         "description": "Delete al the logs from a user. The user id will be provided by the token.",
         "parameters": [
           {
@@ -1211,36 +1143,18 @@
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           },
-          "_200": {
-            "description": "Returns a message that did not find the logs",
-            "produces": [
-              "application/json"
-            ],
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to delete",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There are no logs"
-                }
-              }
+              "$ref": "#/status_204"
             }
           },
-          "_401": {
-            "description": "Returns unauthorized",
+          "403": {
+            "description": "Returns forbidden",
             "produces": [
               "application/json"
             ],
@@ -1259,12 +1173,15 @@
     },
     "/logs/hard/{id}": {
       "delete": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "summary": "Permanently deletes log",
+        "summary": "Permanently deletes the user log",
         "description": "Delete the log. The log id will be provided by the token.",
         "produces": [
           "application/json"
@@ -1304,27 +1221,15 @@
             }
           },
           "204": {
-            "description": "There is no log with informed ID",
+            "description": "Returns an empty object, signaling that there are no logs to delete",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no log"
-                }
-              }
+              "$ref": "#/status_204"
             }
           },
           "500": {
-            "description": "Error on the server side",
+            "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           }
         }
@@ -1332,12 +1237,15 @@
     },
     "/logs/all/hard": {
       "delete": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "summary": "Hard Delete for all logs from user",
+        "summary": "Permanently deletes all user logs",
         "description": "Delete al the logs from a user forever. This action cannot be undone. The user id will be provided by the token.",
         "produces": [
           "application/json"
@@ -1387,27 +1295,18 @@
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/error_500"
             }
           },
           "204": {
-            "description": "Returns an empty object, signaling that there are no logs to display",
+            "description": "Returns an empty object, signaling that there are no logs to delete",
             "schema": {
-              "$ref": "#/emptyLogs"
+              "$ref": "#/status_204"
             }
           },
-          "_401": {
-            "description": "Returns unauthorized",
+          "403": {
+            "description": "Returns forbidden",
             "produces": [
               "application/json"
             ],
@@ -1432,13 +1331,6 @@
         "type": "string",
         "example": "Token not provided"
       }
-    }
-  },
-  "emptyLogs": {
-    "type": "object",
-    "properties": {
-      "type": "object",
-      "example": "{}"
     }
   },
   "user_created_successfully": {
@@ -1486,12 +1378,12 @@
       }
     }
   },
-  "delete_200_": {
+  "status_204": {
     "type": "object",
     "properties": {
       "message": {
         "type": "string",
-        "example": "There is no user"
+        "example": "{}"
       }
     }
   },

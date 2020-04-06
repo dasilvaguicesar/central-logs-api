@@ -13,7 +13,7 @@ module.exports = {
 
       const hasLogs = logs.length
       if (!hasLogs) {
-        return res.status(200).json({ message: 'There are no logs' })
+        return res.status(204).json({ message: 'There are no logs' })
       }
 
       return res.status(200).json(logs)
@@ -53,7 +53,7 @@ module.exports = {
 
       const hasLogs = logs.length
       if (!hasLogs) {
-        return res.status(200).json({ message: 'There are no logs' })
+        return res.status(204).json({ message: 'There are no logs' })
       }
 
       return res.status(200).json(logs)
@@ -103,7 +103,7 @@ module.exports = {
         paranoid: false
       })
       if (!isLogFound) {
-        return res.status(200).json({ message: 'There is no log' })
+        return res.status(204).json({ message: 'There is no log' })
       }
 
       await Log.restore({
@@ -127,7 +127,7 @@ module.exports = {
 
       const hasLogs = logs.length
       if (!hasLogs) {
-        return res.status(200).json({ message: 'There are no logs' })
+        return res.status(204).json({ message: 'There are no logs' })
       }
 
       await Log.restore({
@@ -150,7 +150,7 @@ module.exports = {
       })
 
       if (!logExist) {
-        return res.status(200).json({ message: 'There is no log' })
+        return res.status(204).json({ message: 'There is no log' })
       }
 
       await Log.destroy({
@@ -172,7 +172,7 @@ module.exports = {
 
       const hasLogs = logs.length
       if (!hasLogs) {
-        return res.status(200).json({ message: 'There are no logs' })
+        return res.status(204).json({ message: 'There are no logs' })
       }
 
       await Log.destroy({
@@ -195,7 +195,7 @@ module.exports = {
       })
 
       if (!logExist) {
-        return res.status(200).json({ message: 'There is no log' })
+        return res.status(204).json({ message: 'There is no log' })
       }
 
       await Log.destroy({
@@ -219,7 +219,7 @@ module.exports = {
 
       const hasLogs = logs.length
       if (!hasLogs) {
-        return res.status(200).json({ message: 'There are no logs' })
+        return res.status(204).json({ message: 'There are no logs' })
       }
 
       await Log.destroy({

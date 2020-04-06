@@ -411,7 +411,7 @@ describe('The API on /user Endpoint at PATCH method should...', () => {
       .set('Authorization', `Bearer ${authorization[0]}`)
 
     expect(res.body).toEqual({ message: 'Password does not match' })
-    expect(res.statusCode).toEqual(401)
+    expect(res.statusCode).toEqual(412)
   })
 
   test('return status code 406 with not confirmed password and a message', async () => {
@@ -473,9 +473,9 @@ describe('The API on /user Endpoint at DELETE method should...', () => {
       .set('Authorization', `Bearer ${authorization[0]}`)
 
     expect(resForDeleteFirst.body).toEqual({ message: 'Deleted succesfully' })
-    expect(res.body).toEqual({ message: 'There is no user' })
+    expect(res.body).toEqual({})
     expect(resForDeleteFirst.statusCode).toEqual(200)
-    expect(res.statusCode).toEqual(200)
+    expect(res.statusCode).toEqual(204)
   })
 
   test('return status 401 when authorization is incorrect', async () => {
@@ -532,9 +532,9 @@ describe('The API on /user/hard Endpoint at DELETE method should...', () => {
     .set('Authorization', `Bearer ${authorization}`)
 
     expect(resForDeleteFirst.body).toEqual({ message: 'Deleted successfully, this action cannot be undone' })
-    expect(resForDeleteFirstAgain.body).toEqual({ message: 'There is no user' })
+    expect(resForDeleteFirstAgain.body).toEqual({})
     expect(resForDeleteFirst.statusCode).toEqual(200)
-    expect(resForDeleteFirstAgain.statusCode).toEqual(200)
+    expect(resForDeleteFirstAgain.statusCode).toEqual(204)
   })
 
   test('return status 200 and a message when user not found or has already been deleted', async () => {
@@ -546,9 +546,9 @@ describe('The API on /user/hard Endpoint at DELETE method should...', () => {
       .set('Authorization', `Bearer ${authorization[0]}`)
 
     expect(resForDeleteFirst.body).toEqual({ message: 'Deleted successfully, this action cannot be undone' })
-    expect(res.body).toEqual({ message: 'There is no user' })
+    expect(res.body).toEqual({})
     expect(resForDeleteFirst.statusCode).toEqual(200)
-    expect(res.statusCode).toEqual(200)
+    expect(res.statusCode).toEqual(204)
   })
 
   test('return status 401 when authorization is incorrect', async () => {
@@ -594,13 +594,13 @@ describe('The API on /logs/sender/:senderApplication endpoint at GET method shou
     expect(res.statusCode).toEqual(200)
   })
 
-  test('returns status code 200 and a message when the application name does not exist', async () => {
+  test('returns status code 204 and a message when the application name does not exist', async () => {
     const res = await request(app)
       .get('/logs/sender/fake_app')
       .set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toEqual({ message: 'There are no logs' })
-    expect(res.statusCode).toEqual(200)
+    expect(res.body).toEqual({})
+    expect(res.statusCode).toEqual(204)
   })
 
   test('returns status code 401 and a message of error when authorization is invalid', async () => {
@@ -695,8 +695,8 @@ describe('The API on /logs/level/:level endpoint at GET method should...', () =>
       .get('/logs/level/fake_level')
       .set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toEqual({ message: 'There are no logs' })
-    expect(res.statusCode).toEqual(200)
+    expect(res.body).toEqual({})
+    expect(res.statusCode).toEqual(204)
   })
 
   test('returns status code 401 and a message of error when authorization is invalid', async () => {
@@ -798,12 +798,12 @@ describe('The API on /logs/restore/id/:id Endpoint at POST method should...', ()
   expect(res.statusCode).toEqual(200)
   })
 
-  test('return status code 200 and a message when log has deleted hard', async () => {
+  test('return status code 204 and a message when log has deleted hard', async () => {
     await request(app).delete('/logs/hard/1').set('Authorization', `Bearer ${authorization[0]}`)
     const res = await request(app).post('/logs/restore/id/1').set('Authorization', `Bearer ${authorization[0]}`)
 
-  expect(res.body).toEqual({ message: 'There is no log' })
-  expect(res.statusCode).toEqual(200)
+  expect(res.body).toEqual({})
+  expect(res.statusCode).toEqual(204)
   })
 
   test('return status code 401 when authorization not provided', async () => {
@@ -858,12 +858,12 @@ describe('The API on /logs/restore/all Endpoint at POST method should...', () =>
   expect(res.statusCode).toEqual(200)
   })
 
-  test('return status code 200 and a message when log has deleted hard', async () => {
+  test('return status code 204 and a message when log has deleted hard', async () => {
     await request(app).delete('/logs/all/hard').set('Authorization', `Bearer ${authorization[0]}`)
     const res = await request(app).post('/logs/restore/all').set('Authorization', `Bearer ${authorization[0]}`)
 
-  expect(res.body).toEqual({ message: 'There are no logs' })
-  expect(res.statusCode).toEqual(200)
+  expect(res.body).toEqual({})
+  expect(res.statusCode).toEqual(204)
   })
 
   test('return status code 401 when authorization not provided', async () => {
@@ -901,11 +901,11 @@ describe('The API on /logs/id/:id endpoint at DELETE method should...', () => {
     expect(res.statusCode).toEqual(200)
   })
 
-  test('returns status code 200 and a message when the log does not exist', async () => {
+  test('returns status code 204 and a message when the log does not exist', async () => {
     const res = await request(app).delete('/logs/id/90').set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toEqual({ message: 'There is no log' })
-    expect(res.statusCode).toEqual(200)
+    expect(res.body).toEqual({})
+    expect(res.statusCode).toEqual(204)
   })
 
   test('returns status code 404 and an empty obj when log id is missing', async () => {
@@ -951,11 +951,11 @@ describe('The API on /logs/all endpoint at DELETE method should...', () => {
     expect(res.statusCode).toEqual(200)
   })
 
-  test('returns status code 200 when there is no log to delete', async () => {
+  test('returns status code 204 when there is no log to delete', async () => {
     const res = await request(app).delete('/logs/all').set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toEqual({ message: 'There are no logs' })
-    expect(res.statusCode).toEqual(200)
+    expect(res.body).toEqual({})
+    expect(res.statusCode).toEqual(204)
   })
 
   test('returns status code 401 when authorization is missing', async () => {
@@ -1000,13 +1000,13 @@ describe('The API on /logs/hard/:id endpoint at DELETE method should...', () => 
     expect(res.statusCode).toEqual(200)
   })
 
-  test('returns status code 200 and a message when the log does not exist', async () => {
+  test('returns status code 204 and a message when the log does not exist', async () => {
     const res = await request(app)
       .delete('/logs/hard/90')
       .set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toMatchObject({ message: 'There is no log' })
-    expect(res.statusCode).toEqual(200)
+    expect(res.body).toMatchObject({})
+    expect(res.statusCode).toEqual(204)
   })
 
   test('returns status code 404 and an empty obj when log id is missing', async () => {
@@ -1058,11 +1058,11 @@ describe('The API on /logs/all/hard endpoint at DELETE method should...', () => 
     expect(res.statusCode).toEqual(200)
   })
 
-  test('returns status code 200 when there is no log to delete', async () => {
+  test('returns status code 204 when there is no log to delete', async () => {
     const res = await request(app).delete('/logs/all/hard').set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toEqual({ message: 'There are no logs' })
-    expect(res.statusCode).toEqual(200)
+    expect(res.body).toEqual({})
+    expect(res.statusCode).toEqual(204)
   })
 
   test('returns status code 401 when authorization is missing', async () => {
