@@ -23,7 +23,7 @@ module.exports = {
 
       return res.status(200).json({ total: hasLogs, Logs })
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -42,7 +42,7 @@ module.exports = {
 
       return res.status(200).json(logs)
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -62,7 +62,7 @@ module.exports = {
 
       return res.status(200).json(logs)
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -82,7 +82,7 @@ module.exports = {
 
       return res.status(200).json(logs)
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -110,7 +110,7 @@ module.exports = {
 
       return res.status(201).json({ createdLog })
     } catch (error) {
-      res.status(500).json({ message: 'Internal Server Error' })
+      res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -136,7 +136,7 @@ module.exports = {
 
       return res.status(200).json({ message: 'Log restored successfully' })
     } catch (error) {
-      res.status(500).json({ message: 'Internal Server Error' })
+      res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -160,7 +160,7 @@ module.exports = {
 
       return res.status(200).json({ message: 'All logs restored successfully' })
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -183,7 +183,7 @@ module.exports = {
 
       return res.status(200).json({ message: 'Deleted successfully' })
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -205,7 +205,7 @@ module.exports = {
 
       return res.status(200).json({ message: 'Deleted successfully' })
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -229,7 +229,7 @@ module.exports = {
 
       return res.status(200).json({ message: 'Deleted successfully, this action cannot be undone' })
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -253,7 +253,7 @@ module.exports = {
 
       return res.status(200).json({ message: 'Deleted successfully, this action cannot be undone' })
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   }
 }

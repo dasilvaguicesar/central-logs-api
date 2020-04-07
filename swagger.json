@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.3",
     "title": "API Error Center",
     "description": "Store and retrieve application logs from other applications",
+    "version": "1.0.3",
     "license": {
       "name": "MIT",
       "url": "http://opensource.org/licenses/MIT"
@@ -11,6 +11,9 @@
   },
   "host": "localhost:8080",
   "basePath": "/",
+  "schemes": [
+    "http"
+  ],
   "components": {
     "securitySchemes": {
       "bearerAuth": {
@@ -20,13 +23,22 @@
       }
     }
   },
-  "tags": [{
-    "name": "User",
-    "description": "routes"
-  },{
-    "name": "Logs",
-    "description": "routes"
-  }],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "User",
+      "description": "routes"
+    },
+    {
+      "name": "Logs",
+      "description": "routes"
+    }
+  ],
   "paths": {
     "/user/signup": {
       "post": {
@@ -35,12 +47,6 @@
         ],
         "summary": "Create user",
         "description": "Create a new user account to get access to the API",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -50,11 +56,11 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "João da Silva"
+                  "example": "Example User"
                 },
                 "email": {
                   "type": "string",
-                  "example": "joao@email.com.br"
+                  "example": "user@email.com.br"
                 },
                 "password": {
                   "type": "string",
@@ -68,25 +74,25 @@
           "201": {
             "description": "Returns confirmation of the created user",
             "schema": {
-              "$ref": "#/user_created_successfully"
+              "$ref": "#/User_created_successfully"
             }
           },
           "406": {
             "description": "Returns the message stating that the data sent is invalid",
             "schema": {
-              "$ref": "#/invalid_data"
+              "$ref": "#/Invalid_data"
             }
           },
           "409": {
             "description": "Returns the message stating that the email already exists",
             "schema": {
-              "$ref": "#/create_409"
+              "$ref": "#/User_email_already_exists"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -99,9 +105,6 @@
         ],
         "summary": "User login authenticate",
         "description": "Authenticate an existing user returning a token for API requests",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -112,7 +115,7 @@
                 "email": {
                   "type": "string",
                   "format": "email",
-                  "example": "joao@email.com.br"
+                  "example": "user@email.com.br"
                 },
                 "password": {
                   "type": "string",
@@ -126,59 +129,32 @@
         "responses": {
           "200": {
             "description": "Returns the token",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "token": {
-                  "type": "string",
-                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOnsiaWQiOjJ9LCJpYXQiOjE1ODUxNjkwMjMsImV4cCI6MTU4NTI1NTQyM30.wgioiERBtXR6CXppvSyKV0MhFu28TKgfw94JvNEuDHA"
-                }
-              }
+              "$ref": "#/token"
             }
           },
           "400": {
             "description": "Returns bad request",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "User not found"
-                }
-              }
+              "$ref": "#/User_not_found"
             }
           },
           "401": {
             "description": "Returns unauthorized",
             "schema": {
-              "$ref": "#/incorrect_password"
+              "$ref": "#/Incorrect_password"
+            }
+          },
+          "406": {
+            "description": "Returns not acceptable",
+            "schema": {
+              "$ref": "#/Invalid_data"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
-            }
-          },
-          "406": {
-            "description": "Returns not acceptable",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Data values are not valid"
-                }
-              }
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -191,9 +167,6 @@
         ],
         "summary": "User login",
         "description": "Authenticate an existing user returning a token for API requests",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -204,7 +177,7 @@
                 "email": {
                   "type": "string",
                   "format": "email",
-                  "example": "joao@email.com.br"
+                  "example": "user@email.com.br"
                 },
                 "password": {
                   "type": "string",
@@ -218,57 +191,33 @@
         "responses": {
           "200": {
             "description": "Returns OK",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "token": {
-                  "type": "string",
-                  "example": "User restored successfully"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Returns unauthorized",
-            "schema": {
-              "$ref": "#/incorrect_password"
-            }
-          },
-          "500": {
-            "description": "Returns the message stating that an error has occurred on the server",
-            "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/userRestoredSuccessfully"
             }
           },
           "204": {
             "description": "Returns no content",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "{}"
-                }
-              }
+              "$ref": "#/noContent"
+            }
+          },
+          "401": {
+            "description": "Returns unauthorized",
+            "schema": {
+              "$ref": "#/Incorrect_password"
             }
           },
           "406": {
             "description": "Returns not acceptable",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Data values are not valid"
-                }
-              }
+              "$ref": "#/Invalid_data"
             }
+          }
+        },
+        "500": {
+          "description": "Returns the message stating that an error has occurred on the server",
+          "schema": {
+            "$ref": "#/Internal_server_error"
           }
         }
       }
@@ -280,12 +229,6 @@
         ],
         "summary": "Update user",
         "description": "Update an authenticated user with the new information provided in request body",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
@@ -305,11 +248,11 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "João da Silva Sauro"
+                  "example": "Updated User"
                 },
                 "email": {
                   "type": "string",
-                  "example": "joao_sauro@email.com.br"
+                  "example": "updateduser@email.com.br"
                 },
                 "oldPassword": {
                   "type": "string",
@@ -331,85 +274,43 @@
           "200": {
             "description": "OK",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Updated sucessfully!"
-                }
-              }
+              "$ref": "#/updatedSuccessfully"
             }
           },
           "204": {
             "description": "Returns a message that did not find a user",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "{}"
-                }
-              }
+              "$ref": "#/noContent"
             }
           },
-          "412": {
-            "description": "Precondition failed",
-            "produces": [
-              "application/json"
-            ],
+          "401": {
+            "description": "Returns unauthorized",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Password does not match"
-                }
-              }
+              "$ref": "#/invalidToken"
+            }
+          },
+          "403": {
+            "description": "Returns forbidden",
+            "schema": {
+              "$ref": "#/tokenNotProvided"
             }
           },
           "406": {
             "description": "Returns Not Acceptable",
             "schema": {
-              "$ref": "#/invalid_data"
+              "$ref": "#/Invalid_data"
+            }
+          },
+          "412": {
+            "description": "Precondition failed",
+            "schema": {
+              "$ref": "#/passwordDoesNotMatch"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
-            }
-          },
-          "401": {
-            "description": "Returns unauthorized",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid token"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Returns forbidden",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token not provided"
-                }
-              }
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -425,12 +326,6 @@
         ],
         "summary": "Disable user",
         "description": "Executes a soft delete disabling the user account",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
@@ -447,19 +342,19 @@
           "200": {
             "description": "Returns the message stating that the user has been deleted",
             "schema": {
-              "$ref": "#/delete_200"
-            }
-          },
-          "500": {
-            "description": "Returns the message stating that an error has occurred on the server",
-            "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/delete"
             }
           },
           "204": {
             "description": "Returns an empty object signaling that the user no longer exists",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
+            }
+          },
+          "500": {
+            "description": "Returns the message stating that an error has occurred on the server",
+            "schema": {
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -477,9 +372,6 @@
         ],
         "summary": "Delete user forever",
         "description": "Remove user account and all the logs associated with it from the database. This action cannot be undone. The user id will be provided by the token.",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
@@ -495,29 +387,20 @@
         "responses": {
           "200": {
             "description": "Returns the body with a message of deletation",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Deleted successfully, this action cannot be undone"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Returns the message stating that an error has occurred on the server",
-            "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/permanentDelete"
             }
           },
           "204": {
             "description": "Returns an empty object signaling that the user no longer exists",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
+            }
+          },
+          "500": {
+            "description": "Returns the message stating that an error has occurred on the server",
+            "schema": {
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -560,31 +443,19 @@
           "200": {
             "description": "Returns all logs by application",
             "schema": {
-              "type": "object",
-              "properties": {
-                "total": {
-                  "type": "number",
-                  "example": 1
-                },
-                "Logs": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Log"
-                  }
-                }
-              }
+              "$ref": "#/logsExample"
             }
           },
           "204": {
             "description": "There are no records for the reported application",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -623,9 +494,6 @@
             }
           }
         ],
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
             "description": "Returns all logs by environment",
@@ -639,13 +507,13 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/Internal_server_error"
             }
           },
           "204": {
             "description": "Returns an empty object, signaling that there are no logs to display for this use",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
             }
           }
         }
@@ -663,12 +531,6 @@
         ],
         "summary": "Get logs by level",
         "description": "Get all the logs with the same level passed in the url parameter",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
@@ -694,19 +556,19 @@
           "200": {
             "description": "Returns all logs by level",
             "schema": {
-              "$ref": "#/getByLevel_200"
+              "$ref": "#/onlyTheLog"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/Internal_server_error"
             }
           },
           "204": {
             "description": "Returns the message stating that there are no logs",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
             }
           }
         }
@@ -724,9 +586,6 @@
         ],
         "summary": "Get all logs by user",
         "description": "Bring all logs registered by the user",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
@@ -761,29 +620,25 @@
           "401": {
             "description": "Returns unauthorized",
             "schema": {
-              "$ref": "#/invalid_token"
+              "$ref": "#/invalidToken"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/Internal_server_error"
             }
           },
           "204": {
             "description": "Returns an empty object, signaling that there are no logs to display",
             "schema": {
-              "type": "object",
-              "properties": {
-                "type": "string",
-                "example": "{}"
-              }
+              "$ref": "#/noContent"
             }
           },
           "403": {
             "description": "Returns forbidden",
             "schema": {
-              "$ref": "#/token_not_provided"
+              "$ref": "#/tokenNotProvided"
             }
           }
         }
@@ -799,12 +654,6 @@
         ],
         "summary": "Create logs",
         "description": "Creates a new log associated with a user. The user id is provided by the token.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
@@ -832,7 +681,7 @@
                 },
                 "senderApplication": {
                   "type": "string",
-                  "example": "Server load monitor"
+                  "example": "Application name"
                 },
                 "sendDate": {
                   "type": "string",
@@ -849,9 +698,6 @@
         "responses": {
           "200": {
             "description": "Returns the created log",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
               "type": "object",
               "properties": {
@@ -872,7 +718,7 @@
                     },
                     "senderApplication": {
                       "type": "string",
-                      "example": "Server load monitor"
+                      "example": "Application name"
                     },
                     "sendDate": {
                       "type": "string",
@@ -902,13 +748,13 @@
           "406": {
             "description": "Returns not acceptable",
             "schema": {
-              "$ref": "#/invalid_data"
+              "$ref": "#/Invalid_data"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -963,13 +809,13 @@
           "204": {
             "description": "Returns an empty object, signaling that there are no logs to display",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -1015,13 +861,13 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/Internal_server_error"
             }
           },
           "204": {
             "description": "Returns an empty object, signaling that there are no logs to display",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
             }
           }
         }
@@ -1039,12 +885,6 @@
         ],
         "summary": "Soft delete log",
         "description": "Delete the log with the id passed in the url",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
@@ -1070,19 +910,19 @@
           "200": {
             "description": "Returns the message stating that the log has been deleted",
             "schema": {
-              "$ref": "#/deleteById_200"
-            }
-          },
-          "500": {
-            "description": "Returns the message stating that an error has occurred on the server",
-            "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/logDelete"
             }
           },
           "204": {
             "description": "Returns an empty object, signaling that there are no logs to delete",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
+            }
+          },
+          "500": {
+            "description": "Returns the message stating that an error has occurred on the server",
+            "schema": {
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -1097,9 +937,6 @@
           {
             "bearerAuth": []
           }
-        ],
-        "produces": [
-          "application/json"
         ],
         "summary": "Soft Delete for all logs from user",
         "description": "Delete al the logs from a user. The user id will be provided by the token.",
@@ -1118,59 +955,32 @@
         "responses": {
           "200": {
             "description": "Returns the body with a message of deletation",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Deleted successfully"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Returns unauthorized",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid token"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Returns the message stating that an error has occurred on the server",
-            "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/deletionOfAllLogs"
             }
           },
           "204": {
             "description": "Returns an empty object, signaling that there are no logs to delete",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
+            }
+          },
+          "401": {
+            "description": "Returns unauthorized",
+            "schema": {
+              "$ref": "#/invalidToken"
             }
           },
           "403": {
             "description": "Returns forbidden",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token not provided"
-                }
-              }
+              "$ref": "#/tokenNotProvided"
+            }
+          },
+          "500": {
+            "description": "Returns the message stating that an error has occurred on the server",
+            "schema": {
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -1188,9 +998,6 @@
         ],
         "summary": "Permanently deletes the user log",
         "description": "Delete the log. The log id will be provided by the token.",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
@@ -1216,25 +1023,19 @@
           "200": {
             "description": "Remove the log with the matching ID if it existed previously. Otherwise do nothing.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Deleted successfully, this action cannot be undone"
-                }
-              }
+              "$ref": "#/permanentLogDelete"
             }
           },
           "204": {
             "description": "Returns an empty object, signaling that there are no logs to delete",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/Internal_server_error"
             }
           }
         }
@@ -1252,9 +1053,6 @@
         ],
         "summary": "Permanently deletes all user logs",
         "description": "Delete al the logs from a user forever. This action cannot be undone. The user id will be provided by the token.",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
@@ -1270,211 +1068,262 @@
         "responses": {
           "200": {
             "description": "Returns the body with a message of deletation",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Deleted successfully, this action cannot be undone"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Returns unauthorized",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid token"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Returns the message stating that an error has occurred on the server",
-            "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/permanentDeletionOfAllLogs"
             }
           },
           "204": {
             "description": "Returns an empty object, signaling that there are no logs to delete",
             "schema": {
-              "$ref": "#/status_204"
+              "$ref": "#/noContent"
+            }
+          },
+          "401": {
+            "description": "Returns unauthorized",
+            "schema": {
+              "$ref": "#/invalidToken"
             }
           },
           "403": {
             "description": "Returns forbidden",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token not provided"
-                }
-              }
+              "$ref": "#/tokenNotProvided"
+            }
+          },
+          "500": {
+            "description": "Returns the message stating that an error has occurred on the server",
+            "schema": {
+              "$ref": "#/Internal_server_error"
             }
           }
         }
       }
-    }
-  },
-  "token_not_provided": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "Token not provided"
+    },
+    "User_created_successfully": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User created successfully"
+        }
       }
-    }
-  },
-  "user_created_successfully": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "User created successfully"
+    },
+    "Invalid_data": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Invalid data"
+        }
       }
-    }
-  },
-  "invalid_token": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "Invalid token"
+    },
+    "User_email_already_exists": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User email already exists"
+        }
       }
-    }
-  },
-  "incorrect_password": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "Incorrect password"
+    },
+    "Internal_server_error": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Internal server error"
+        }
       }
-    }
-  },
-  "invalid_data": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "Invalid data"
+    },
+    "token": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOnsiaWQiOjJ9LCJpYXQiOjE1ODUxNjkwMjMsImV4cCI6MTU4NTI1NTQyM30.wgioiERBtXR6CXppvSyKV0MhFu28TKgfw94JvNEuDHA"
+        }
       }
-    }
-  },
-  "create_409": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "User email already exists"
+    },
+    "User_not_found": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "User not found"
+        }
       }
-    }
-  },
-  "status_204": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "{}"
+    },
+    "Incorrect_password": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Incorrect password"
+        }
       }
-    }
-  },
-  "delete_200": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "Deleted successfully"
+    },
+    "userRestoredSuccessfully": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "User restored successfully"
+        }
       }
-    }
-  },
-  "getByLevel_200": {
-    "type": "object",
-    "properties": {
-      "id": {
-        "type": "number",
-        "example": 1
-      },
-      "level": {
-        "type": "string",
-        "example": "WARN"
-      },
-      "description": {
-        "type": "string",
-        "example": "Application restarted"
-      },
-      "senderApplication": {
-        "type": "string",
-        "example": "Server load monitor"
-      },
-      "sendDate": {
-        "type": "string",
-        "example": "11/26/2019 15:00"
-      },
-      "environment": {
-        "type": "string",
-        "example": "homologation"
-      },
-      "UserId": {
-        "type": "number",
-        "example": 1
-      },
-      "updatedAt": {
-        "type": "date-time",
-        "example": "2020-03-26T00:21:40.039Z"
-      },
-      "createdAt": {
-        "type": "date-time",
-        "example": "2020-03-26T00:21:40.039Z"
+    },
+    "noContent": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "{}"
+        }
       }
-    }
-  },
-  "getByLevel_200_": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "There are no logs"
+    },
+    "updatedSuccessfully": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Updated sucessfully"
+        }
       }
-    }
-  },
-  "deleteById_200": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "Deleted successfully"
+    },
+    "passwordDoesNotMatch": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Password does not match"
+        }
       }
-    }
-  },
-  "deleteById_200_": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "There is no logs"
+    },
+    "invalidToken": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Invalid token"
+        }
       }
-    }
-  },
-  "error_500": {
-    "type": "object",
-    "properties": {
-      "message": {
-        "type": "string",
-        "example": "Internal Server Error"
+    },
+    "tokenNotProvided": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Token not provided"
+        }
+      }
+    },
+    "delete": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Deleted successfully"
+        }
+      }
+    },
+    "permanentDelete": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Deleted successfully, this action cannot be undone"
+        }
+      }
+    },
+    "logsExample": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number",
+          "example": 1
+        },
+        "Logs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/onlyTheLog"
+          }
+        }
+      }
+    },
+    "onlyTheLog": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "level": {
+          "type": "string",
+          "example": "WARN"
+        },
+        "description": {
+          "type": "string",
+          "example": "Application restarted"
+        },
+        "senderApplication": {
+          "type": "string",
+          "example": "Application name"
+        },
+        "sendDate": {
+          "type": "string",
+          "example": "11/26/2019 15:00"
+        },
+        "environment": {
+          "type": "string",
+          "example": "homologation"
+        },
+        "UserId": {
+          "type": "number",
+          "example": 1
+        },
+        "updatedAt": {
+          "type": "date-time",
+          "example": "2020-03-26T00:21:40.039Z"
+        },
+        "createdAt": {
+          "type": "date-time",
+          "example": "2020-03-26T00:21:40.039Z"
+        }
+      }
+    },
+    "logDelete": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Deleted successfully"
+        }
+      }
+    },
+    "deletionOfAllLogs": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Deleted successfully"
+        }
+      }
+    },
+    "permanentLogDelete": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Deleted successfully, this action cannot be undone"
+        }
+      }
+    },
+    "permanentDeletionOfAllLogs": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Deleted successfully, this action cannot be undone"
+        }
       }
     }
   },
@@ -1485,15 +1334,15 @@
         "id": {
           "type": "integer",
           "format": "int64",
-          "example": 123
+          "example": 1
         },
         "name": {
           "type": "string",
-          "example": "João da Silva"
+          "example": "Example User"
         },
         "email": {
           "type": "string",
-          "example": "joao@email.com.br"
+          "example": "user@email.com.br"
         },
         "password": {
           "type": "string",
@@ -1535,7 +1384,7 @@
         },
         "senderApplication": {
           "type": "string",
-          "example": "Server load monitor"
+          "example": "Application name"
         },
         "sendDate": {
           "type": "string"
@@ -1550,7 +1399,7 @@
         },
         "userId": {
           "type": "integer",
-          "example": 123
+          "example": 1
         }
       },
       "required": [

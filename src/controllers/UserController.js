@@ -39,7 +39,7 @@ module.exports = {
       }
     } catch (error) {
       console.log(error)
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -65,7 +65,7 @@ module.exports = {
 
       return res.status(200).json({ message: 'User restored successfully' })
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -113,7 +113,7 @@ module.exports = {
 
       return res.status(status).json({ message })
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -138,7 +138,7 @@ module.exports = {
 
       return res.status(200).json({ message: 'Deleted succesfully' })
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -168,7 +168,7 @@ module.exports = {
 
       return res.status(200).json({ message: 'Deleted successfully, this action cannot be undone' })
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   }
 }

@@ -11,7 +11,7 @@ module.exports = {
       const isValid = (await schemaValidationForAuthenticate(body))
 
       if (!isValid) {
-        return res.status(406).json({ message: 'Data values are not valid' })
+        return res.status(406).json({ message: 'Invalid data' })
       }
       const { email, password } = body
       const user = await User.findOne({
@@ -30,7 +30,7 @@ module.exports = {
         return res.status(401).json({ message: 'Incorrect password' })
       }
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
   
@@ -42,7 +42,7 @@ module.exports = {
       const isValid = (await schemaValidationForAuthenticate(body))
 
       if (!isValid) {
-        return res.status(406).json({ message: 'Data values are not valid' })
+        return res.status(406).json({ message: 'Invalid data' })
       }
 
       const { email, password } = body
@@ -70,7 +70,7 @@ module.exports = {
         return res.status(401).json({ message: 'Incorrect password' })
       }
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -86,7 +86,7 @@ module.exports = {
         next()
       }
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -107,7 +107,7 @@ module.exports = {
       }
     } catch (error) {
       console.log(error)
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   }
 }

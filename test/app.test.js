@@ -172,7 +172,7 @@ describe('The API on /user/signin Endpoint at POST method should...', () => {
       .post('/user/signin')
       .send(fakeUsers.authenticate.invalidEmail)
 
-    expect(res.body).toEqual({ message: 'Data values are not valid' })
+    expect(res.body).toEqual({ message: 'Invalid data' })
     expect(res.statusCode).toEqual(406)
   })
 
@@ -181,7 +181,7 @@ describe('The API on /user/signin Endpoint at POST method should...', () => {
       .post('/user/signin')
       .send(fakeUsers.authenticate.invalidPasswordType)
 
-    expect(res.body).toEqual({ message: 'Data values are not valid' })
+    expect(res.body).toEqual({ message: 'Invalid data' })
     expect(res.statusCode).toEqual(406)
   })
 
@@ -190,7 +190,7 @@ describe('The API on /user/signin Endpoint at POST method should...', () => {
       .post('/user/signin')
       .send(fakeUsers.authenticate.userWithTypeNumberPassword)
 
-    expect(res.body).toEqual({ message: 'Data values are not valid' })
+    expect(res.body).toEqual({ message: 'Invalid data' })
     expect(res.statusCode).toEqual(406)
   })
 
@@ -199,7 +199,7 @@ describe('The API on /user/signin Endpoint at POST method should...', () => {
       .post('/user/signin')
       .send(fakeUsers.authenticate.invalidEmail)
 
-    expect(res.body).toEqual({ message: 'Data values are not valid' })
+    expect(res.body).toEqual({ message: 'Invalid data' })
     expect(res.statusCode).toEqual(406)
   })
 
@@ -208,7 +208,7 @@ describe('The API on /user/signin Endpoint at POST method should...', () => {
       .post('/user/signin')
       .send(fakeUsers.authenticate.invalidPassword)
 
-    expect(res.body).toEqual({ message: 'Data values are not valid' })
+    expect(res.body).toEqual({ message: 'Invalid data' })
     expect(res.statusCode).toEqual(406)
   })
 })
@@ -252,7 +252,7 @@ describe('The API on /user/restore Endpoint at POST method should...', () => {
       .send(fakeUsers.authenticate.blankEmail)
       .set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toEqual({ message: 'Data values are not valid' })
+    expect(res.body).toEqual({ message: 'Invalid data' })
     expect(res.statusCode).toEqual(406)
   })
 
@@ -262,7 +262,7 @@ describe('The API on /user/restore Endpoint at POST method should...', () => {
       .send(fakeUsers.authenticate.userWithInvalidPassword)
       .set('Authorization', `Bearer ${authorization[0]}`)
 
-    expect(res.body).toEqual({ message: 'Data values are not valid'})
+    expect(res.body).toEqual({ message: 'Invalid data'})
     expect(res.statusCode).toEqual(406)
   })
 })
