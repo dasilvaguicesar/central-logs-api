@@ -20,84 +20,14 @@
       }
     }
   },
+  "tags": [{
+    "name": "User",
+    "description": "routes"
+  },{
+    "name": "Logs",
+    "description": "routes"
+  }],
   "paths": {
-    "/user/logs": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get all logs by user",
-        "description": "Bring all logs registered by the user",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "description": "Provide the Authorization header using the Bearer scheme",
-            "schema": {
-              "type": "string",
-              "required": true,
-              "example": "Bearer wgioiERBtXR6CXppvSyKV0MhFu28TKgfw94JvNEuDHA"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns the logs ",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "total": {
-                  "type": "number",
-                  "example": 1
-                },
-                "Logs": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Log"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Returns unauthorized",
-            "schema": {
-              "$ref": "#/invalid_token"
-            }
-          },
-          "500": {
-            "description": "Returns the message stating that an error has occurred on the server",
-            "schema": {
-              "$ref": "#/error_500"
-            }
-          },
-          "204": {
-            "description": "Returns an empty object, signaling that there are no logs to display",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": "string",
-                "example": "{}"
-              }
-            }
-          },
-          "403": {
-            "description": "Returns forbidden",
-            "schema": {
-              "$ref": "#/token_not_provided"
-            }
-          }
-        }
-      }
-    },
     "/user/signup": {
       "post": {
         "tags": [
@@ -783,6 +713,81 @@
       }
     },
     "/logs": {
+      "get": {
+        "tags": [
+          "Logs"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get all logs by user",
+        "description": "Bring all logs registered by the user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Provide the Authorization header using the Bearer scheme",
+            "schema": {
+              "type": "string",
+              "required": true,
+              "example": "Bearer wgioiERBtXR6CXppvSyKV0MhFu28TKgfw94JvNEuDHA"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the logs ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "type": "number",
+                  "example": 1
+                },
+                "Logs": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Log"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Returns unauthorized",
+            "schema": {
+              "$ref": "#/invalid_token"
+            }
+          },
+          "500": {
+            "description": "Returns the message stating that an error has occurred on the server",
+            "schema": {
+              "$ref": "#/error_500"
+            }
+          },
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to display",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": "string",
+                "example": "{}"
+              }
+            }
+          },
+          "403": {
+            "description": "Returns forbidden",
+            "schema": {
+              "$ref": "#/token_not_provided"
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Logs"

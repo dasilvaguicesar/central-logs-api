@@ -3,6 +3,30 @@ const { schemaValidationForLogs } = require('../utils/validators')
 
 module.exports = {
 
+  getAllLogs: async (req, res) => {
+    try {
+      const { locals: id } = req
+      const isLogsFound = await User.findOne({
+        where: { id },
+        include: Log
+      })
+
+      if (isLogsFound === null) {
+        return res.status(401).json({ message: 'Invalid token' })
+      }
+      const { dataValues: { Logs } } = isLogsFound
+
+      const hasLogs = Logs.length
+      if (!hasLogs) {
+        return res.status(204).json({})
+      }
+
+      return res.status(200).json({ total: hasLogs, Logs })
+    } catch (error) {
+      return res.status(500).json({ message: 'Internal Server Error' })
+    }
+  },
+
   getBySender: async (req, res) => {
     try {
       const { locals: id } = req

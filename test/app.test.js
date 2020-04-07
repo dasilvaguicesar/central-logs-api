@@ -48,63 +48,6 @@ afterAll(async () => {
 })
 
 // tests on user routes
-describe('The API on /user/logs Endpoint at GET method should...', () => {
-  beforeEach(async () => {
-    await signUp(fakeUsers.create.validData)
-    await signIn(fakeUsers.authenticate.validData)
-    await createLog(fakeLogs.create.validLog)
-    await createLog(fakeLogs.create.validLog)
-  })
-
-  afterEach(async () => {
-    await syncDB()
-  })
-
-  test('return status 200, total of logs and the logs information', async () => {
-    const res = await request(app)
-      .get('/user/logs')
-      .set('Authorization', `Bearer ${authorization[0]}`)
-
-    expect(res.body).toEqual(fakeLogs.expected.getLogsbyUser)
-    expect(res.statusCode).toEqual(200)
-  })
-
-  test('return status 204 and a message when there is no log', async () => {
-    await request(app)
-      .delete('/logs/id/1')
-      .set('Authorization', `Bearer ${authorization[0]}`)
-    await request(app)
-      .delete('/logs/id/2')
-      .set('Authorization', `Bearer ${authorization[0]}`)
-
-    const res = await request(app)
-      .get('/user/logs')
-      .set('Authorization', `Bearer ${authorization[0]}`)
-
-    expect(res.body).toEqual({})
-    expect(res.statusCode).toEqual(204)
-  })
-
-  test('return status 401 when authorization is incorrect', async () => {
-    const incorrectToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-    const res = await request(app)
-      .get('/user/logs')
-      .set('Authorization', `Bearer ${incorrectToken}`)
-
-    expect(res.body).toEqual({ message: 'Invalid token' })
-    expect(res.statusCode).toEqual(401)
-  })
-
-  test('return status 401 when authorization not provided', async () => {
-    const res = await request(app)
-      .get('/user/logs')
-      .set('Authorization', 'Bearer ')
-
-    expect(res.body).toEqual({ message: 'Invalid token' })
-    expect(res.statusCode).toEqual(401)
-  })
-})
-
 describe('The API on /user/signup Endpoint at POST method should...', () => {
   afterEach(async () => {
     await syncDB()
@@ -572,6 +515,63 @@ describe('The API on /user/hard Endpoint at DELETE method should...', () => {
 })
 
 // tests on logs routes
+describe('The API on /logs Endpoint at GET method should...', () => {
+  beforeEach(async () => {
+    await signUp(fakeUsers.create.validData)
+    await signIn(fakeUsers.authenticate.validData)
+    await createLog(fakeLogs.create.validLog)
+    await createLog(fakeLogs.create.validLog)
+  })
+
+  afterEach(async () => {
+    await syncDB()
+  })
+
+  test('return status 200, total of logs and the logs information', async () => {
+    const res = await request(app)
+      .get('/logs')
+      .set('Authorization', `Bearer ${authorization[0]}`)
+
+    expect(res.body).toEqual(fakeLogs.expected.getLogsbyUser)
+    expect(res.statusCode).toEqual(200)
+  })
+
+  test('return status 204 and a message when there is no log', async () => {
+    await request(app)
+      .delete('/logs/id/1')
+      .set('Authorization', `Bearer ${authorization[0]}`)
+    await request(app)
+      .delete('/logs/id/2')
+      .set('Authorization', `Bearer ${authorization[0]}`)
+
+    const res = await request(app)
+      .get('/logs')
+      .set('Authorization', `Bearer ${authorization[0]}`)
+
+    expect(res.body).toEqual({})
+    expect(res.statusCode).toEqual(204)
+  })
+
+  test('return status 401 when authorization is incorrect', async () => {
+    const incorrectToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+    const res = await request(app)
+      .get('/logs')
+      .set('Authorization', `Bearer ${incorrectToken}`)
+
+    expect(res.body).toEqual({ message: 'Invalid token' })
+    expect(res.statusCode).toEqual(401)
+  })
+
+  test('return status 401 when authorization not provided', async () => {
+    const res = await request(app)
+      .get('/logs')
+      .set('Authorization', 'Bearer ')
+
+    expect(res.body).toEqual({ message: 'Invalid token' })
+    expect(res.statusCode).toEqual(401)
+  })
+})
+
 describe('The API on /logs/sender/:senderApplication endpoint at GET method should...', () => {
   beforeEach(async () => {
     await signUp(fakeUsers.create.validData)
@@ -1032,7 +1032,7 @@ describe('The API on /logs/hard/:id endpoint at DELETE method should...', () => 
 
   test('returns status 204 and an empty object which means that there are no logs', async () => {
     await request(app).delete('/logs/hard/1').set('Authorization', `Bearer ${authorization[0]}`)
-    const res = await request(app).get('/user/logs').set('Authorization', `Bearer ${authorization[0]}`)
+    const res = await request(app).get('/logs').set('Authorization', `Bearer ${authorization[0]}`)
 
     expect(res.body).toEqual({})
     expect(res.statusCode).toEqual(204)
@@ -1091,7 +1091,7 @@ describe('The API on /logs/all/hard endpoint at DELETE method should...', () => 
     await createLog(fakeLogs.create.validLog)
 
     await request(app).delete('/logs/all/hard').set('Authorization', `Bearer ${authorization[0]}`)
-    const res = await request(app).get('/user/logs').set('Authorization', `Bearer ${authorization[0]}`)
+    const res = await request(app).get('/logs').set('Authorization', `Bearer ${authorization[0]}`)
 
     expect(res.body).toEqual({})
     expect(res.statusCode).toEqual(204)

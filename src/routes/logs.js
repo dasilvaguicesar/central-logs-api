@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/LogsController')
 
+router.get('/', controller.getAllLogs)
+
 router.get('/sender/:senderApplication', controller.getBySender)
 
 router.get('/environment/:environment', controller.getByEnvironment)
