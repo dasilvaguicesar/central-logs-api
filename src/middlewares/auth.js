@@ -103,12 +103,12 @@ module.exports = {
         return res.status(401).json({ message: 'Invalid token' })
       } 
 
-      const existsUser = await User.findOne({
+      const checkUser = await User.findOne({
         where: { id }
       })
 
-      if (!existsUser) {
-        return res.status(406).json({ message: 'User does not exists' })
+      if (!checkUser) {
+        return res.status(406).json({ message: 'User not found' })
       } else {
         req.locals = id
         next()

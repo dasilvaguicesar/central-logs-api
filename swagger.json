@@ -442,7 +442,7 @@
           "200": {
             "description": "Returns all logs by application",
             "schema": {
-              "$ref": "#/logsExample"
+              "$ref": "#/logWithTotal"
             }
           },
           "204": {
@@ -497,10 +497,7 @@
           "200": {
             "description": "Returns all logs by environment",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Log"
-              }
+              "$ref": "#/logWithTotal"
             }
           },
           "500": {
@@ -555,7 +552,7 @@
           "200": {
             "description": "Returns all logs by level",
             "schema": {
-              "$ref": "#/onlyTheLog"
+              "$ref": "#/logWithTotal"
             }
           },
           "500": {
@@ -698,50 +695,7 @@
           "200": {
             "description": "Returns the created log",
             "schema": {
-              "type": "object",
-              "properties": {
-                "createdLog": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "level": {
-                      "type": "string",
-                      "example": "WARN"
-                    },
-                    "description": {
-                      "type": "string",
-                      "example": "Application restarted"
-                    },
-                    "senderApplication": {
-                      "type": "string",
-                      "example": "Application name"
-                    },
-                    "sendDate": {
-                      "type": "string",
-                      "example": "11/26/2019 15:00"
-                    },
-                    "environment": {
-                      "type": "string",
-                      "example": "homologation"
-                    },
-                    "UserId": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "updatedAt": {
-                      "type": "date-time",
-                      "example": "2020-03-26T00:21:40.039Z"
-                    },
-                    "createdAt": {
-                      "type": "date-time",
-                      "example": "2020-03-26T00:21:40.039Z"
-                    }
-                  }
-                }
-              }
+              "$ref": "#/onlyTheLog"
             }
           },
           "406": {
@@ -1234,7 +1188,7 @@
       }
     }
   },
-  "logsExample": {
+  "logWithTotal": {
     "type": "object",
     "properties": {
       "total": {
@@ -1252,41 +1206,46 @@
   "onlyTheLog": {
     "type": "object",
     "properties": {
-      "id": {
-        "type": "number",
-        "example": 1
-      },
-      "level": {
-        "type": "string",
-        "example": "WARN"
-      },
-      "description": {
-        "type": "string",
-        "example": "Application restarted"
-      },
-      "senderApplication": {
-        "type": "string",
-        "example": "Application name"
-      },
-      "sendDate": {
-        "type": "string",
-        "example": "11/26/2019 15:00"
-      },
-      "environment": {
-        "type": "string",
-        "example": "homologation"
-      },
-      "UserId": {
-        "type": "number",
-        "example": 1
-      },
-      "updatedAt": {
-        "type": "date-time",
-        "example": "2020-03-26T00:21:40.039Z"
-      },
-      "createdAt": {
-        "type": "date-time",
-        "example": "2020-03-26T00:21:40.039Z"
+      "createdLog": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "level": {
+            "type": "string",
+            "example": "WARN"
+          },
+          "description": {
+            "type": "string",
+            "example": "Application restarted"
+          },
+          "senderApplication": {
+            "type": "string",
+            "example": "Application name"
+          },
+          "sendDate": {
+            "type": "string",
+            "example": "11/26/2019 15:00"
+          },
+          "environment": {
+            "type": "string",
+            "example": "homologation"
+          },
+          "UserId": {
+            "type": "number",
+            "example": 1
+          },
+          "updatedAt": {
+            "type": "date-time",
+            "example": "2020-03-26T00:21:40.039Z"
+          },
+          "createdAt": {
+            "type": "date-time",
+            "example": "2020-03-26T00:21:40.039Z"
+          }
+        }
       }
     }
   },
@@ -1361,7 +1320,7 @@
         "id": {
           "type": "integer",
           "format": "int64",
-          "example": 321
+          "example": 1
         },
         "level": {
           "type": "string",

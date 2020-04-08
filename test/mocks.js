@@ -211,30 +211,33 @@ const fakeLogs = {
         updatedAt: '2020-02-15T18:01:01.000Z'
       }]
     },
-    getLogsbyParams: [{
-      UserId: 1,
-      createdAt: '2020-02-15T18:01:01.000Z',
-      deletedAt: null,
-      description: 'Aplicattion down',
-      environment: 'production',
-      id: 1,
-      level: 'FATAL',
-      sendDate: '10/10/2019 15:00',
-      senderApplication: 'App_1',
-      updatedAt: '2020-02-15T18:01:01.000Z'
-    },
-    {
-      UserId: 1,
-      createdAt: '2020-02-15T18:01:01.000Z',
-      deletedAt: null,
-      description: 'Aplicattion down',
-      environment: 'production',
-      id: 2,
-      level: 'FATAL',
-      sendDate: '10/10/2019 15:00',
-      senderApplication: 'App_1',
-      updatedAt: '2020-02-15T18:01:01.000Z'
-    }]
+    getLogsbyParams: {
+      total: 2,
+      logs: [{
+        UserId: 1,
+        createdAt: '2020-02-15T18:01:01.000Z',
+        deletedAt: null,
+        description: 'Aplicattion down',
+        environment: 'production',
+        id: 1,
+        level: 'FATAL',
+        sendDate: '10/10/2019 15:00',
+        senderApplication: 'App_1',
+        updatedAt: '2020-02-15T18:01:01.000Z'
+      },
+      {
+        UserId: 1,
+        createdAt: '2020-02-15T18:01:01.000Z',
+        deletedAt: null,
+        description: 'Aplicattion down',
+        environment: 'production',
+        id: 2,
+        level: 'FATAL',
+        sendDate: '10/10/2019 15:00',
+        senderApplication: 'App_1',
+        updatedAt: '2020-02-15T18:01:01.000Z'
+      }]
+    }
   }
 }
 
