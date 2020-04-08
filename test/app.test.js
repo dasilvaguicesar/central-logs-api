@@ -407,7 +407,7 @@ describe('The API on /user Endpoint at DELETE method should...', () => {
     expect(res.statusCode).toEqual(200)
   })
 
-  test('return status 200 and a message when user not found or has already been deleted', async () => {
+  test('return status 406 and a message when user not found or has already been deleted', async () => {
     const resForDeleteFirst = await request(app)
       .delete('/user')
       .set('Authorization', `Bearer ${authorization[0]}`)
@@ -416,9 +416,9 @@ describe('The API on /user Endpoint at DELETE method should...', () => {
       .set('Authorization', `Bearer ${authorization[0]}`)
 
     expect(resForDeleteFirst.body).toEqual({ message: 'Deleted succesfully' })
-    expect(res.body).toEqual({})
+    expect(res.body).toEqual({message: "User does not exists"})
     expect(resForDeleteFirst.statusCode).toEqual(200)
-    expect(res.statusCode).toEqual(204)
+    expect(res.statusCode).toEqual(406)
   })
 
   test('return status 401 when authorization is incorrect', async () => {
@@ -475,9 +475,9 @@ describe('The API on /user/hard Endpoint at DELETE method should...', () => {
     .set('Authorization', `Bearer ${authorization}`)
 
     expect(resForDeleteFirst.body).toEqual({ message: 'Deleted successfully, this action cannot be undone' })
-    expect(resForDeleteFirstAgain.body).toEqual({})
+    expect(resForDeleteFirstAgain.body).toEqual({ message: "User does not exists" })
     expect(resForDeleteFirst.statusCode).toEqual(200)
-    expect(resForDeleteFirstAgain.statusCode).toEqual(204)
+    expect(resForDeleteFirstAgain.statusCode).toEqual(406)
   })
 
   test('return status 200 and a message when user not found or has already been deleted', async () => {
@@ -489,9 +489,9 @@ describe('The API on /user/hard Endpoint at DELETE method should...', () => {
       .set('Authorization', `Bearer ${authorization[0]}`)
 
     expect(resForDeleteFirst.body).toEqual({ message: 'Deleted successfully, this action cannot be undone' })
-    expect(res.body).toEqual({})
+    expect(res.body).toEqual({ message: "User does not exists" })
     expect(resForDeleteFirst.statusCode).toEqual(200)
-    expect(res.statusCode).toEqual(204)
+    expect(res.statusCode).toEqual(406)
   })
 
   test('return status 401 when authorization is incorrect', async () => {

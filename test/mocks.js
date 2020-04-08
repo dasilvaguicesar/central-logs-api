@@ -74,18 +74,18 @@ const fakeUsers = {
   },
   update: {
     allValidData: {
-      name: 'New Raul Seixas',
-      email: 'raulzito123@gmail.com',
+      name: 'New User Example',
+      email: 'newuser@email.com',
       oldPassword: '123456',
       newPassword: '12345678',
       confirmPassword: '12345678'
     },
     validNameAndEmail: {
-      name: 'New Raul Seixas',
-      email: 'raulzito123@gmail.com'
+      name: 'New User Example',
+      email: 'newuser@email.com',
     },
     validNameAndPassword: {
-      name: 'New Raul Seixas',
+      name: 'New User Example',
       oldPassword: '123456',
       newPassword: '12345678',
       confirmPassword: '12345678'
@@ -94,13 +94,13 @@ const fakeUsers = {
       name: 'New User Example'
     },
     validEmailAndPassword: {
-      email: 'raulzito123@gmail.com',
+      email: 'newuser@email.com',
       oldPassword: '123456',
       newPassword: '12345678',
       confirmPassword: '12345678'
     },
     validEmail: {
-      email: 'raulzito123@gmail.com'
+      email: 'newuser@email.com',
     },
     validPassword: {
       oldPassword: '123456',
@@ -123,8 +123,8 @@ const fakeUsers = {
       confirmPassword: '12345678'
     },
     invalidKeys: {
-      ame: 'New Raul Seixas',
-      email: 'raulzito123@gmail.com',
+      ame: 'New User Example',
+      email: 'newuser@email.com',
       oldPassword: '123456',
       newPassword: '12345678',
       confirmPassword: '12345678'

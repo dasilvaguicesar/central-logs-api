@@ -38,7 +38,6 @@ module.exports = {
         return res.status(406).json({ message: 'Invalid data' })
       }
     } catch (error) {
-      console.log(error)
       return res.status(500).json({ message: 'Internal server error' })
     }
   },
@@ -80,7 +79,6 @@ module.exports = {
           dataToBeUpdated.push(obj)
         }
       }
-
       const validation = (await schemaValidationForUpdateUser().isValid(body))
       if (!validation) {
         return res.status(406).json({ message: 'Invalid data' })
@@ -89,17 +87,13 @@ module.exports = {
       const user = await User.findOne({
         where: { id }
       })
-
-      if (!user) {
-        return res.status(204).json({ message: 'There is no user' })
-      }
-
+      
       if (dataToBeUpdated.indexOf('oldPassword') !== -1) {
         const passwordMatch = await compareHash(body.oldPassword, user.password)
         if (!passwordMatch) {
           return res.status(412).json({ message: 'Password does not match' })
         }
-
+        
         const hashedPassword = await generateHashedPassword(body.newPassword)
 
         if (typeof hashedPassword === 'string') {

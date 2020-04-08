@@ -90,7 +90,7 @@ module.exports = {
     }
   },
 
-  authorize: (req, res, next) => {
+  authorize: async (req, res, next) => {
     try {
       const token = req.headers.authorization
 
@@ -101,12 +101,19 @@ module.exports = {
       const { userId: { id } } = decodeToken(token)
       if (id === 0) {
         return res.status(401).json({ message: 'Invalid token' })
+      } 
+
+      const existsUser = await User.findOne({
+        where: { id }
+      })
+
+      if (!existsUser) {
+        return res.status(406).json({ message: 'User does not exists' })
       } else {
         req.locals = id
         next()
       }
     } catch (error) {
-      console.log(error)
       return res.status(500).json({ message: 'Internal server error' })
     }
   }

@@ -95,13 +95,6 @@ module.exports = {
       if (!isValidSchemaLog) {
         return res.status(406).json({ message: 'Invalid data' })
       }
-      const existsUser = await User.findOne({
-        where: { id }
-      })
-
-      if (!existsUser) {
-        return res.status(409).json({ message: 'User does not exists' })
-      }
 
       const createdLog = await Log.create({
         ...body,

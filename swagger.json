@@ -74,25 +74,25 @@
           "201": {
             "description": "Returns confirmation of the created user",
             "schema": {
-              "$ref": "#/User_created_successfully"
+              "$ref": "#/userCreatedSuccessfully"
             }
           },
           "406": {
             "description": "Returns the message stating that the data sent is invalid",
             "schema": {
-              "$ref": "#/Invalid_data"
+              "$ref": "#/invalidData"
             }
           },
           "409": {
             "description": "Returns the message stating that the email already exists",
             "schema": {
-              "$ref": "#/User_email_already_exists"
+              "$ref": "#/userEmailAlreadyExists"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -136,25 +136,25 @@
           "400": {
             "description": "Returns bad request",
             "schema": {
-              "$ref": "#/User_not_found"
+              "$ref": "#/userNotFound"
             }
           },
           "401": {
             "description": "Returns unauthorized",
             "schema": {
-              "$ref": "#/Incorrect_password"
+              "$ref": "#/incorrectPassword"
             }
           },
           "406": {
             "description": "Returns not acceptable",
             "schema": {
-              "$ref": "#/Invalid_data"
+              "$ref": "#/invalidData"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -204,20 +204,20 @@
           "401": {
             "description": "Returns unauthorized",
             "schema": {
-              "$ref": "#/Incorrect_password"
+              "$ref": "#/incorrectPassword"
             }
           },
           "406": {
             "description": "Returns not acceptable",
             "schema": {
-              "$ref": "#/Invalid_data"
+              "$ref": "#/invalidData"
             }
           }
         },
         "500": {
           "description": "Returns the message stating that an error has occurred on the server",
           "schema": {
-            "$ref": "#/Internal_server_error"
+            "$ref": "#/internalServerError"
           }
         }
       }
@@ -226,6 +226,11 @@
       "patch": {
         "tags": [
           "User"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "summary": "Update user",
         "description": "Update an authenticated user with the new information provided in request body",
@@ -277,12 +282,6 @@
               "$ref": "#/updatedSuccessfully"
             }
           },
-          "204": {
-            "description": "Returns a message that did not find a user",
-            "schema": {
-              "$ref": "#/noContent"
-            }
-          },
           "401": {
             "description": "Returns unauthorized",
             "schema": {
@@ -298,7 +297,7 @@
           "406": {
             "description": "Returns Not Acceptable",
             "schema": {
-              "$ref": "#/Invalid_data"
+              "$ref": "#/invalidData"
             }
           },
           "412": {
@@ -310,7 +309,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -354,7 +353,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -400,7 +399,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -455,7 +454,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -507,7 +506,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           },
           "204": {
@@ -562,7 +561,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           },
           "204": {
@@ -626,7 +625,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           },
           "204": {
@@ -748,13 +747,13 @@
           "406": {
             "description": "Returns not acceptable",
             "schema": {
-              "$ref": "#/Invalid_data"
+              "$ref": "#/invalidData"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -815,7 +814,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -861,7 +860,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           },
           "204": {
@@ -922,7 +921,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -980,7 +979,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -1035,7 +1034,7 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -1093,237 +1092,237 @@
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/Internal_server_error"
+              "$ref": "#/internalServerError"
             }
           }
         }
       }
-    },
-    "User_created_successfully": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "User created successfully"
+    }
+  },
+  "userCreatedSuccessfully": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "User created successfully"
+      }
+    }
+  },
+  "invalidData": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Invalid data"
+      }
+    }
+  },
+  "userEmailAlreadyExists": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "User email already exists"
+      }
+    }
+  },
+  "internalServerError": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Internal server error"
+      }
+    }
+  },
+  "token": {
+    "type": "object",
+    "properties": {
+      "token": {
+        "type": "string",
+        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOnsiaWQiOjJ9LCJpYXQiOjE1ODUxNjkwMjMsImV4cCI6MTU4NTI1NTQyM30.wgioiERBtXR6CXppvSyKV0MhFu28TKgfw94JvNEuDHA"
+      }
+    }
+  },
+  "userNotFound": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "User not found"
+      }
+    }
+  },
+  "incorrectPassword": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Incorrect password"
+      }
+    }
+  },
+  "userRestoredSuccessfully": {
+    "type": "object",
+    "properties": {
+      "token": {
+        "type": "string",
+        "example": "User restored successfully"
+      }
+    }
+  },
+  "noContent": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "{}"
+      }
+    }
+  },
+  "updatedSuccessfully": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Updated sucessfully"
+      }
+    }
+  },
+  "passwordDoesNotMatch": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Password does not match"
+      }
+    }
+  },
+  "invalidToken": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Invalid token"
+      }
+    }
+  },
+  "tokenNotProvided": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Token not provided"
+      }
+    }
+  },
+  "delete": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Deleted successfully"
+      }
+    }
+  },
+  "permanentDelete": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Deleted successfully, this action cannot be undone"
+      }
+    }
+  },
+  "logsExample": {
+    "type": "object",
+    "properties": {
+      "total": {
+        "type": "number",
+        "example": 1
+      },
+      "Logs": {
+        "type": "array",
+        "items": {
+          "$ref": "#/onlyTheLog"
         }
       }
-    },
-    "Invalid_data": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Invalid data"
-        }
+    }
+  },
+  "onlyTheLog": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "number",
+        "example": 1
+      },
+      "level": {
+        "type": "string",
+        "example": "WARN"
+      },
+      "description": {
+        "type": "string",
+        "example": "Application restarted"
+      },
+      "senderApplication": {
+        "type": "string",
+        "example": "Application name"
+      },
+      "sendDate": {
+        "type": "string",
+        "example": "11/26/2019 15:00"
+      },
+      "environment": {
+        "type": "string",
+        "example": "homologation"
+      },
+      "UserId": {
+        "type": "number",
+        "example": 1
+      },
+      "updatedAt": {
+        "type": "date-time",
+        "example": "2020-03-26T00:21:40.039Z"
+      },
+      "createdAt": {
+        "type": "date-time",
+        "example": "2020-03-26T00:21:40.039Z"
       }
-    },
-    "User_email_already_exists": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "User email already exists"
-        }
+    }
+  },
+  "logDelete": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Deleted successfully"
       }
-    },
-    "Internal_server_error": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Internal server error"
-        }
+    }
+  },
+  "deletionOfAllLogs": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Deleted successfully"
       }
-    },
-    "token": {
-      "type": "object",
-      "properties": {
-        "token": {
-          "type": "string",
-          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOnsiaWQiOjJ9LCJpYXQiOjE1ODUxNjkwMjMsImV4cCI6MTU4NTI1NTQyM30.wgioiERBtXR6CXppvSyKV0MhFu28TKgfw94JvNEuDHA"
-        }
+    }
+  },
+  "permanentLogDelete": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Deleted successfully, this action cannot be undone"
       }
-    },
-    "User_not_found": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "User not found"
-        }
-      }
-    },
-    "Incorrect_password": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Incorrect password"
-        }
-      }
-    },
-    "userRestoredSuccessfully": {
-      "type": "object",
-      "properties": {
-        "token": {
-          "type": "string",
-          "example": "User restored successfully"
-        }
-      }
-    },
-    "noContent": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "{}"
-        }
-      }
-    },
-    "updatedSuccessfully": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Updated sucessfully"
-        }
-      }
-    },
-    "passwordDoesNotMatch": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Password does not match"
-        }
-      }
-    },
-    "invalidToken": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Invalid token"
-        }
-      }
-    },
-    "tokenNotProvided": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Token not provided"
-        }
-      }
-    },
-    "delete": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Deleted successfully"
-        }
-      }
-    },
-    "permanentDelete": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Deleted successfully, this action cannot be undone"
-        }
-      }
-    },
-    "logsExample": {
-      "type": "object",
-      "properties": {
-        "total": {
-          "type": "number",
-          "example": 1
-        },
-        "Logs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/onlyTheLog"
-          }
-        }
-      }
-    },
-    "onlyTheLog": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "number",
-          "example": 1
-        },
-        "level": {
-          "type": "string",
-          "example": "WARN"
-        },
-        "description": {
-          "type": "string",
-          "example": "Application restarted"
-        },
-        "senderApplication": {
-          "type": "string",
-          "example": "Application name"
-        },
-        "sendDate": {
-          "type": "string",
-          "example": "11/26/2019 15:00"
-        },
-        "environment": {
-          "type": "string",
-          "example": "homologation"
-        },
-        "UserId": {
-          "type": "number",
-          "example": 1
-        },
-        "updatedAt": {
-          "type": "date-time",
-          "example": "2020-03-26T00:21:40.039Z"
-        },
-        "createdAt": {
-          "type": "date-time",
-          "example": "2020-03-26T00:21:40.039Z"
-        }
-      }
-    },
-    "logDelete": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Deleted successfully"
-        }
-      }
-    },
-    "deletionOfAllLogs": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Deleted successfully"
-        }
-      }
-    },
-    "permanentLogDelete": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Deleted successfully, this action cannot be undone"
-        }
-      }
-    },
-    "permanentDeletionOfAllLogs": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string",
-          "example": "Deleted successfully, this action cannot be undone"
-        }
+    }
+  },
+  "permanentDeletionOfAllLogs": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Deleted successfully, this action cannot be undone"
       }
     }
   },
