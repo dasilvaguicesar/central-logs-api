@@ -11,9 +11,6 @@
   },
   "host": "api-central-de-erros.herokuapp.com",
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
   "components": {
     "securitySchemes": {
       "bearerAuth": {
