@@ -5,12 +5,11 @@ const logsRoute = require('./logs')
 const { authorize } = require('../middlewares/auth')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('../../swagger.json')
-const port = process.env.PORT
 
 router.get('/', (req, res) => {
   res.status(200).json({
     message: 'Access the documentation',
-    docs: `http://localhost:${port}/api-docs`
+    docs: "https://api-central-de-erros.herokuapp.com/api-docs"
   })
 })
 

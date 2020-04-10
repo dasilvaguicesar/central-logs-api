@@ -1,32 +1,26 @@
 {
   "name": "centralerros",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Store and retrieve application logs",
   "main": "./src/bin/server.js",
   "scripts": {
-    "docker": "docker-compose up -d",
-    "dbtest": "node ./src/bin/databaseConnectTesting.js",
     "syncdb": "node ./src/bin/databaseSynchronization.js",
-    "start": "nodemon",
-    "test": "jest /test/app.test.js --watchAll"
+    "start": "nodemon"
   },
   "author": "Guilherme Cesar Da Silva, Henrique Detoni, Juiliano Freire Ribeiro, Luane Caroline Aquino Cavalcanti",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mariadb": "^2.2.0",
     "sequelize": "^5.21.5",
     "swagger-ui-express": "^4.1.4",
     "yup": "^0.28.3"
   },
-  "devDependencies": {
-    "dotenv": "^8.2.0",
-    "jest": "^25.1.0",
-    "nodemon": "^2.0.2",
-    "standard": "^14.3.3",
-    "supertest": "^4.0.2"
+    "engines": {
+    "node": "12.13.1",
+    "npm": "6.14.2"
   }
 }
