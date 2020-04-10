@@ -3,13 +3,13 @@
   "info": {
     "title": "API Error Center",
     "description": "Store and retrieve application logs from other applications",
-    "version": "1.0.3",
+    "version": "1.1.1",
     "license": {
       "name": "MIT",
       "url": "http://opensource.org/licenses/MIT"
     }
   },
-  "host": "localhost:8080",
+  "host": "api-central-de-erros.herokuapp.com",
   "basePath": "/",
   "schemes": [
     "http"
