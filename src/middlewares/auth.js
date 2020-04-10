@@ -7,19 +7,13 @@ module.exports = {
 
   authenticate: async (req, res) => {
     try {
-      if (Object.keys(req.body).length > 2) {
-        return res.status(406).json({ message: 'You are input wrong data then necessary' })
-      }
-      const { body: { email, password } } = req
-      const isValid = (await schemaValidationForAuthenticate()).isValid({
-        email,
-        password
-      })
+      const body = req.body
+      const isValid = (await schemaValidationForAuthenticate(body))
 
-      if (!isValid || typeof email !== 'string' || typeof password !== 'string') {
-        return res.status(406).json({ error: 'Data values are not valid' })
+      if (!isValid) {
+        return res.status(406).json({ message: 'Invalid data' })
       }
-
+      const { email, password } = body
       const user = await User.findOne({
         where: { email }
       })
@@ -36,25 +30,22 @@ module.exports = {
         return res.status(401).json({ message: 'Incorrect password' })
       }
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
+  
   authenticateForRestoreUser: async (req, res, next) => {
     try {
-      if (Object.keys(req.body).length > 2) {
-        return res.status(406).json({ message: 'You are input wrong data then necessary' })
-      }
 
-      const { body: { email, password } } = req
+      const body = req.body
 
-      const isValid = (await schemaValidationForAuthenticate()).isValid({
-        email,
-        password
-      })
+      const isValid = (await schemaValidationForAuthenticate(body))
 
       if (!isValid) {
-        return res.status(406).json({ error: 'Data values are not valid' })
+        return res.status(406).json({ message: 'Invalid data' })
       }
+
+      const { email, password } = body
 
       const user = await User.findOne({
         where: {
@@ -79,7 +70,7 @@ module.exports = {
         return res.status(401).json({ message: 'Incorrect password' })
       }
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -95,31 +86,35 @@ module.exports = {
         next()
       }
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
-  authorize: (req, res, next) => {
+  authorize: async (req, res, next) => {
     try {
       const token = req.headers.authorization
-      if (!token) {
-        return res.status(401).json({ message: 'Token not provided' })
-      }
 
-      const [bearer, splitToken] = token.split(' ')
-      if (!bearer || !splitToken) {
-        return res.status(401).json({ message: 'Invalid token' })
+      if (!token) {
+        return res.status(403).json({ message: 'Token not provided' })
       }
 
       const { userId: { id } } = decodeToken(token)
       if (id === 0) {
         return res.status(401).json({ message: 'Invalid token' })
+      } 
+
+      const checkUser = await User.findOne({
+        where: { id }
+      })
+
+      if (!checkUser) {
+        return res.status(406).json({ message: 'User not found' })
       } else {
         req.locals = id
         next()
       }
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   }
 }

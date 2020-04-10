@@ -44,13 +44,19 @@ module.exports = {
     return schema
   },
 
-  schemaValidationForAuthenticate: async () => {
+  schemaValidationForAuthenticate: async (body) => {
+    
+    if (typeof body.email !== 'string' || typeof body.password !== 'string'){
+      return false
+    }
+
     const schema = yup.object().shape({
-      email: yup.string().required().email(),
-      password: yup.string().required().min(6)
+      email: yup.string().email().required(),
+      password: yup.string().min(6).required()
     })
-    return schema
+    return await schema.isValid(body)
   },
+  
   updateByItem: async (bodyItem, body, id) => {
     switch (bodyItem) {
       case 'name,email,oldPassword,newPassword,confirmPassword':
@@ -59,7 +65,7 @@ module.exports = {
           email: body.email,
           password: body.password
         }, { where: { id } })
-        return { status: 200, message: 'Updated sucessfully!' }
+        return { status: 200, message: 'Updated sucessfully' }
 
       case 'name,email':
         await User.update({
@@ -68,39 +74,39 @@ module.exports = {
         }, {
           where: { id }
         })
-        return { status: 200, message: 'Updated sucessfully!' }
+        return { status: 200, message: 'Updated sucessfully' }
 
       case 'name,oldPassword,newPassword,confirmPassword':
         await User.update({
           name: body.name,
           password: body.password
         }, { where: { id } })
-        return { status: 200, message: 'Updated sucessfully!' }
+        return { status: 200, message: 'Updated sucessfully' }
 
       case 'name':
         await User.update({
           name: body.name
         }, { where: { id } })
-        return { status: 200, message: 'Updated sucessfully!' }
+        return { status: 200, message: 'Updated sucessfully' }
 
       case 'email,oldPassword,newPassword,confirmPassword':
         await User.update({
           email: body.email,
           password: body.password
         }, { where: { id } })
-        return { status: 200, message: 'Updated sucessfully!' }
+        return { status: 200, message: 'Updated sucessfully' }
 
       case 'email':
         await User.update({
           email: body.email
         }, { where: { id } })
-        return { status: 200, message: 'Updated sucessfully!' }
+        return { status: 200, message: 'Updated sucessfully' }
 
       case 'oldPassword,newPassword,confirmPassword':
         await User.update({
           password: body.password
         }, { where: { id } })
-        return { status: 200, message: 'Updated sucessfully!' }
+        return { status: 200, message: 'Updated sucessfully' }
 
       default:
         return { status: 406, message: 'Invalid data' }

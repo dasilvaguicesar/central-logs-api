@@ -6,30 +6,6 @@ const { decodeToken } = require('../utils/auth')
 
 module.exports = {
 
-  getAllLogs: async (req, res) => {
-    try {
-      const { locals: id } = req
-      const isLogsFound = await User.findOne({
-        where: { id },
-        include: Log
-      })
-
-      if (isLogsFound === null) {
-        return res.status(401).json({ message: 'Invalid token' })
-      }
-      const { dataValues: { Logs } } = isLogsFound
-
-      const hasLogs = Logs.length
-      if (!hasLogs) {
-        return res.status(200).json({ message: 'There are no logs' })
-      }
-
-      return res.status(200).json({ total: hasLogs, Logs })
-    } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
-    }
-  },
-
   create: async (req, res) => {
     try {
       const { body: { name, email, password } } = req
@@ -56,21 +32,14 @@ module.exports = {
       const hashedPassword = await generateHashedPassword(password)
 
       if (typeof hashedPassword === 'string') {
-        const { dataValues: { name: userName, email: userEmail, createdAt } } = await User.create({
-          name,
-          email,
-          password: hashedPassword
-        })
-
-        return res.status(201).json({
-          message: 'User created successfully',
-          data: { userName, userEmail, createdAt }
-        })
+        await User.create({ name, email, password: hashedPassword })
+        return res.status(201).json({ message: 'User created successfully' })
       } else {
         return res.status(406).json({ message: 'Invalid data' })
       }
+
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -87,16 +56,17 @@ module.exports = {
       })
 
       if (!user) {
-        return res.status(200).json({ message: 'There is no user' })
+        return res.status(204).json({})
       }
 
       await User.restore({
         where: { id }
       })
 
-      return res.status(200).json({ message: 'User restored successfully.' })
+      return res.status(200).json({ message: 'User restored successfully' })
+
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -120,17 +90,13 @@ module.exports = {
       const user = await User.findOne({
         where: { id }
       })
-
-      if (!user) {
-        return res.status(204).json({ message: 'There is no user' })
-      }
-
+      
       if (dataToBeUpdated.indexOf('oldPassword') !== -1) {
         const passwordMatch = await compareHash(body.oldPassword, user.password)
         if (!passwordMatch) {
-          return res.status(401).json({ message: 'Password does not match' })
+          return res.status(412).json({ message: 'Password does not match' })
         }
-
+        
         const hashedPassword = await generateHashedPassword(body.newPassword)
 
         if (typeof hashedPassword === 'string') {
@@ -141,10 +107,10 @@ module.exports = {
       }
 
       const { status, message } = await updateByItem(dataToBeUpdated.join(), body, id)
-
       return res.status(status).json({ message })
+
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -155,8 +121,9 @@ module.exports = {
       const userExists = await User.findOne({
         where: { id }
       })
+
       if (!userExists) {
-        return res.status(200).json({ message: 'There is no user' })
+        return res.status(204).json({ message: 'There is no user' })
       }
 
       await Log.destroy({
@@ -168,8 +135,9 @@ module.exports = {
       })
 
       return res.status(200).json({ message: 'Deleted succesfully' })
+
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   },
 
@@ -183,8 +151,9 @@ module.exports = {
       })
 
       if (!userExists) {
-        return res.status(200).json({ message: 'There is no user' })
+        return res.status(204).json({ message: 'There is no user' })
       }
+
       await Log.destroy({
         where: { UserId: id },
         force: true
@@ -198,8 +167,9 @@ module.exports = {
       })
 
       return res.status(200).json({ message: 'Deleted successfully, this action cannot be undone' })
+      
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Server Error' })
+      return res.status(500).json({ message: 'Internal server error' })
     }
   }
 }

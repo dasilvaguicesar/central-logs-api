@@ -1,16 +1,19 @@
 {
   "swagger": "2.0",
-  "host": "api-central-de-erros.herokuapp.com",
-  "basePath": "/",
   "info": {
-    "version": "1.0.2",
-    "title": "Central de Erros API",
+    "title": "API Error Center",
     "description": "Store and retrieve application logs from other applications",
+    "version": "1.1.0",
     "license": {
       "name": "MIT",
       "url": "http://opensource.org/licenses/MIT"
     }
   },
+  "host": "api-central-de-erros.herokuapp.com",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
   "components": {
     "securitySchemes": {
       "bearerAuth": {
@@ -20,137 +23,44 @@
       }
     }
   },
-  "paths": {
-    "/users/logs": {
-      "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get all logs",
-        "description": "Find and retrieve all the logs sotred by the user. Is necessary to especify 'Bearer' Token.",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
-            "schema": {
-              "type": "string",
-              "required": true,
-              "example": "Bearer wgioiERBtXR6CXppvSyKV0MhFu28TKgfw94JvNEuDHA"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "total": {
-                  "type": "number",
-                  "example": 1
-                },
-                "Logs": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Log"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid token"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "_200": {
-            "description": "Returns a message that did not find the logs",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There are no logs"
-                }
-              }
-            }
-          },
-          "_401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token not provided"
-                }
-              }
-            }
-          }
-        }
-      }
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "User",
+      "description": "routes"
     },
-    "/users/signup": {
+    {
+      "name": "Logs",
+      "description": "routes"
+    }
+  ],
+  "paths": {
+    "/user/signup": {
       "post": {
+        "tags": [
+          "User"
+        ],
         "summary": "Create user",
         "description": "Create a new user account to get access to the API",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
-            "name": "user",
+            "name": "User credentials",
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "João da Silva"
+                  "example": "Example User"
                 },
                 "email": {
                   "type": "string",
-                  "example": "joao@email.com.br"
+                  "example": "user@email.com.br"
                 },
                 "password": {
                   "type": "string",
@@ -162,39 +72,39 @@
         ],
         "responses": {
           "201": {
-            "description": "Returns the name, email and date when the user was created",
+            "description": "Returns confirmation of the created user",
             "schema": {
-              "$ref": "#/create_200"
+              "$ref": "#/userCreatedSuccessfully"
             }
           },
           "406": {
             "description": "Returns the message stating that the data sent is invalid",
             "schema": {
-              "$ref": "#/create_406"
+              "$ref": "#/invalidData"
             }
           },
           "409": {
             "description": "Returns the message stating that the email already exists",
             "schema": {
-              "$ref": "#/create_409"
+              "$ref": "#/userEmailAlreadyExists"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/internalServerError"
             }
           }
         }
       }
     },
-    "/users/signin": {
+    "/user/signin": {
       "post": {
-        "summary": "User login",
-        "description": "Authenticate an existing user returning a token for API requests",
-        "produces": [
-          "application/json"
+        "tags": [
+          "User"
         ],
+        "summary": "User login authenticate",
+        "description": "Authenticate an existing user returning a token for API requests",
         "parameters": [
           {
             "in": "body",
@@ -205,7 +115,7 @@
                 "email": {
                   "type": "string",
                   "format": "email",
-                  "example": "joao@email.com.br"
+                  "example": "user@email.com.br"
                 },
                 "password": {
                   "type": "string",
@@ -218,105 +128,45 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the token in the request body",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns the token",
             "schema": {
-              "type": "object",
-              "properties": {
-                "token": {
-                  "type": "string",
-                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOnsiaWQiOjJ9LCJpYXQiOjE1ODUxNjkwMjMsImV4cCI6MTU4NTI1NTQyM30.wgioiERBtXR6CXppvSyKV0MhFu28TKgfw94JvNEuDHA"
-                }
-              }
+              "$ref": "#/token"
             }
           },
           "400": {
-            "description": "Returns Bad Request",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns bad request",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "User not found"
-                }
-              }
+              "$ref": "#/userNotFound"
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns unauthorized",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Incorrect password"
-                }
-              }
+              "$ref": "#/incorrectPassword"
             }
           },
           "406": {
-            "description": "Returns Not Acceptable",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns not acceptable",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "You are input wrong data then necessary"
-                }
-              }
+              "$ref": "#/invalidData"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "_406": {
-            "description": "Returns Not Acceptable",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Data values are not valid"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           }
         }
       }
     },
-    "/users/restore": {
+    "/user/restore": {
       "post": {
+        "tags": [
+          "User"
+        ],
         "summary": "User login",
         "description": "Authenticate an existing user returning a token for API requests",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -327,7 +177,7 @@
                 "email": {
                   "type": "string",
                   "format": "email",
-                  "example": "joao@email.com.br"
+                  "example": "user@email.com.br"
                 },
                 "password": {
                   "type": "string",
@@ -341,112 +191,54 @@
         "responses": {
           "200": {
             "description": "Returns OK",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "token": {
-                  "type": "string",
-                  "example": "User restored successfully."
-                }
-              }
+              "$ref": "#/userRestoredSuccessfully"
+            }
+          },
+          "204": {
+            "description": "Returns no content",
+            "schema": {
+              "$ref": "#/noContent"
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns unauthorized",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Incorrect password"
-                }
-              }
+              "$ref": "#/incorrectPassword"
             }
           },
           "406": {
-            "description": "Returns Not Acceptable",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns not acceptable",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "You are input wrong data then necessary"
-                }
-              }
+              "$ref": "#/invalidData"
             }
-          },
-          "500": {
-            "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "_200": {
-            "description": "Returns Bad Request",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no user"
-                }
-              }
-            }
-          },
-          "_406": {
-            "description": "Returns Not Acceptable",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Data values are not valid"
-                }
-              }
-            }
+          }
+        },
+        "500": {
+          "description": "Returns the message stating that an error has occurred on the server",
+          "schema": {
+            "$ref": "#/internalServerError"
           }
         }
       }
     },
-    "/users": {
+    "/user": {
       "patch": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Update user",
         "description": "Update an authenticated user with the new information provided in request body",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -461,11 +253,11 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "João da Silva Sauro"
+                  "example": "Updated User"
                 },
                 "email": {
                   "type": "string",
-                  "example": "joao_sauro@email.com.br"
+                  "example": "updateduser@email.com.br"
                 },
                 "oldPassword": {
                   "type": "string",
@@ -487,108 +279,45 @@
           "200": {
             "description": "OK",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Updated sucessfully!"
-                }
-              }
-            }
-          },
-          "204": {
-            "description": "Returns a message that did not find a user",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no user"
-                }
-              }
+              "$ref": "#/updatedSuccessfully"
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns unauthorized",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Password does not match"
-                }
-              }
+              "$ref": "#/invalidToken"
+            }
+          },
+          "403": {
+            "description": "Returns forbidden",
+            "schema": {
+              "$ref": "#/tokenNotProvided"
             }
           },
           "406": {
             "description": "Returns Not Acceptable",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid data"
-                }
-              }
+              "$ref": "#/invalidData"
+            }
+          },
+          "412": {
+            "description": "Precondition failed",
+            "schema": {
+              "$ref": "#/passwordDoesNotMatch"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "_401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid token"
-                }
-              }
-            }
-          },
-          "__401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token not provided"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           }
         }
       },
       "delete": {
+        "tags": [
+          "User"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -596,17 +325,11 @@
         ],
         "summary": "Disable user",
         "description": "Executes a soft delete disabling the user account",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -618,26 +341,29 @@
           "200": {
             "description": "Returns the message stating that the user has been deleted",
             "schema": {
-              "$ref": "#/delete_200"
+              "$ref": "#/delete"
+            }
+          },
+          "204": {
+            "description": "Returns an empty object signaling that the user no longer exists",
+            "schema": {
+              "$ref": "#/noContent"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
-            }
-          },
-          "_200": {
-            "description": "Returns the message stating that the user no longer exists",
-            "schema": {
-              "$ref": "#/delete_200_"
+              "$ref": "#/internalServerError"
             }
           }
         }
       }
     },
-    "/users/hard": {
+    "/user/hard": {
       "delete": {
+        "tags": [
+          "User"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -645,14 +371,11 @@
         ],
         "summary": "Delete user forever",
         "description": "Remove user account and all the logs associated with it from the database. This action cannot be undone. The user id will be provided by the token.",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -663,47 +386,20 @@
         "responses": {
           "200": {
             "description": "Returns the body with a message of deletation",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Deleted successfully, this action cannot be undone"
-                }
-              }
+              "$ref": "#/permanentDelete"
+            }
+          },
+          "204": {
+            "description": "Returns an empty object signaling that the user no longer exists",
+            "schema": {
+              "$ref": "#/noContent"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "_200": {
-            "description": "Returns a message that did not find a user",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no user"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -711,6 +407,9 @@
     },
     "/logs/sender/{senderApplication}": {
       "get": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -722,7 +421,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -735,51 +434,27 @@
             "schema": {
               "type": "string",
               "required": true,
-              "example": "Server load monitor"
+              "example": "Application name"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Returns all logs by application",
             "schema": {
-              "type": "object",
-              "properties": {
-                "total": {
-                  "type": "number",
-                  "example": 1
-                },
-                "Logs": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Log"
-                  }
-                }
-              }
+              "$ref": "#/logWithTotal"
             }
           },
           "204": {
-            "description": "There is no logs for the informed application",
+            "description": "There are no records for the reported application",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no log"
-                }
-              }
+              "$ref": "#/noContent"
             }
           },
           "500": {
-            "description": "Error on the server side",
+            "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -787,6 +462,9 @@
     },
     "/logs/environment/{environment}": {
       "get": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -798,7 +476,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -815,41 +493,23 @@
             }
           }
         ],
-        "produces": [
-          "application/json"
-        ],
         "responses": {
           "200": {
-            "description": "Show all logs",
+            "description": "Returns all logs by environment",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Log"
-              }
+              "$ref": "#/logWithTotal"
             }
           },
           "500": {
-            "description": "Returns a message stating that an error has occurred on the server",
+            "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal server error"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           },
-          "_200": {
-            "description": "Returns a message stating that there are no logs to show for this user",
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to display for this use",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There are no logs"
-                }
-              }
+              "$ref": "#/noContent"
             }
           }
         }
@@ -857,6 +517,9 @@
     },
     "/logs/level/{level}": {
       "get": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -864,17 +527,11 @@
         ],
         "summary": "Get logs by level",
         "description": "Get all the logs with the same level passed in the url parameter",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -895,26 +552,97 @@
           "200": {
             "description": "Returns all logs by level",
             "schema": {
-              "$ref": "#/getByLevel_200"
+              "$ref": "#/logWithTotal"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
+              "$ref": "#/internalServerError"
             }
           },
-          "_200": {
+          "204": {
             "description": "Returns the message stating that there are no logs",
             "schema": {
-              "$ref": "#/getByLevel_200_"
+              "$ref": "#/noContent"
             }
           }
         }
       }
     },
     "/logs": {
+      "get": {
+        "tags": [
+          "Logs"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get all logs by user",
+        "description": "Bring all logs registered by the user",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Provide the Authorization header using the Bearer scheme",
+            "schema": {
+              "type": "string",
+              "required": true,
+              "example": "Bearer wgioiERBtXR6CXppvSyKV0MhFu28TKgfw94JvNEuDHA"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the logs ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "type": "number",
+                  "example": 1
+                },
+                "Logs": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Log"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Returns unauthorized",
+            "schema": {
+              "$ref": "#/invalidToken"
+            }
+          },
+          "500": {
+            "description": "Returns the message stating that an error has occurred on the server",
+            "schema": {
+              "$ref": "#/internalServerError"
+            }
+          },
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to display",
+            "schema": {
+              "$ref": "#/noContent"
+            }
+          },
+          "403": {
+            "description": "Returns forbidden",
+            "schema": {
+              "$ref": "#/tokenNotProvided"
+            }
+          }
+        }
+      },
       "post": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -922,17 +650,11 @@
         ],
         "summary": "Create logs",
         "description": "Creates a new log associated with a user. The user id is provided by the token.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -955,7 +677,7 @@
                 },
                 "senderApplication": {
                   "type": "string",
-                  "example": "Server load monitor"
+                  "example": "Application name"
                 },
                 "sendDate": {
                   "type": "string",
@@ -971,85 +693,21 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns OK",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns the created log",
             "schema": {
-              "type": "object",
-              "properties": {
-                "createdLog": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "level": {
-                      "type": "string",
-                      "example": "WARN"
-                    },
-                    "description": {
-                      "type": "string",
-                      "example": "Application restarted"
-                    },
-                    "senderApplication": {
-                      "type": "string",
-                      "example": "Server load monitor"
-                    },
-                    "sendDate": {
-                      "type": "string",
-                      "example": "11/26/2019 15:00"
-                    },
-                    "environment": {
-                      "type": "string",
-                      "example": "homologation"
-                    },
-                    "UserId": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "updatedAt": {
-                      "type": "date-time",
-                      "example": "2020-03-26T00:21:40.039Z"
-                    },
-                    "createdAt": {
-                      "type": "date-time",
-                      "example": "2020-03-26T00:21:40.039Z"
-                    }
-                  }
-                }
-              }
+              "$ref": "#/onlyTheLog"
             }
           },
           "406": {
-            "description": "Returns Not Acceptable",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns not acceptable",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid data"
-                }
-              }
+              "$ref": "#/invalidData"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -1057,6 +715,9 @@
     },
     "/logs/restore/id/{id}": {
       "post": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -1068,7 +729,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1087,7 +748,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Restore the log with the matching ID if it existed previously. Otherwise do nothing.",
+            "description": "Returns the confirmation of the restored log",
             "schema": {
               "type": "object",
               "properties": {
@@ -1099,27 +760,15 @@
             }
           },
           "204": {
-            "description": "There is no log with informed ID",
+            "description": "Returns an empty object, signaling that there are no logs to display",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no log"
-                }
-              }
+              "$ref": "#/noContent"
             }
           },
           "500": {
-            "description": "Error on the server side",
+            "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal server error"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -1127,6 +776,9 @@
     },
     "/logs/restore/all": {
       "post": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
@@ -1138,7 +790,7 @@
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1160,26 +812,15 @@
             }
           },
           "500": {
-            "description": "Returns a message stating that an error has occurred on the server",
+            "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           },
-          "_200": {
-            "description": "Returns a message stating that there are no logs to restore for this user",
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to display",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There are no logs"
-                }
-              }
+              "$ref": "#/noContent"
             }
           }
         }
@@ -1187,24 +828,21 @@
     },
     "/logs/id/{id}": {
       "delete": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "summary": "Delete log",
+        "summary": "Soft delete log",
         "description": "Delete the log with the id passed in the url",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1225,19 +863,19 @@
           "200": {
             "description": "Returns the message stating that the log has been deleted",
             "schema": {
-              "$ref": "#/deleteById_200"
+              "$ref": "#/logDelete"
+            }
+          },
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to delete",
+            "schema": {
+              "$ref": "#/noContent"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "$ref": "#/error_500"
-            }
-          },
-          "_200": {
-            "description": "Returns the message stating that there is no log",
-            "schema": {
-              "$ref": "#/deleteById_200"
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -1245,21 +883,21 @@
     },
     "/logs/all": {
       "delete": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "produces": [
-          "application/json"
-        ],
-        "summary": "Soft Delete for all logs from user.",
+        "summary": "Soft Delete for all logs from user",
         "description": "Delete al the logs from a user. The user id will be provided by the token.",
         "parameters": [
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1270,77 +908,32 @@
         "responses": {
           "200": {
             "description": "Returns the body with a message of deletation",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Deleted successfully"
-                }
-              }
+              "$ref": "#/deletionOfAllLogs"
+            }
+          },
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to delete",
+            "schema": {
+              "$ref": "#/noContent"
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns unauthorized",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid token"
-                }
-              }
+              "$ref": "#/invalidToken"
+            }
+          },
+          "403": {
+            "description": "Returns forbidden",
+            "schema": {
+              "$ref": "#/tokenNotProvided"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "_200": {
-            "description": "Returns a message that did not find the logs",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There are no logs"
-                }
-              }
-            }
-          },
-          "_401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token not provided"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -1348,21 +941,21 @@
     },
     "/logs/hard/{id}": {
       "delete": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "summary": "Permanently deletes log",
+        "summary": "Permanently deletes the user log",
         "description": "Delete the log. The log id will be provided by the token.",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1383,37 +976,19 @@
           "200": {
             "description": "Remove the log with the matching ID if it existed previously. Otherwise do nothing.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Deleted successfully, this action cannot be undone"
-                }
-              }
+              "$ref": "#/permanentLogDelete"
             }
           },
           "204": {
-            "description": "There is no log with informed ID",
+            "description": "Returns an empty object, signaling that there are no logs to delete",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There is no log"
-                }
-              }
+              "$ref": "#/noContent"
             }
           },
           "500": {
-            "description": "Error on the server side",
+            "description": "Returns the message stating that an error has occurred on the server",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           }
         }
@@ -1421,21 +996,21 @@
     },
     "/logs/all/hard": {
       "delete": {
+        "tags": [
+          "Logs"
+        ],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "summary": "Hard Delete for all logs from user",
+        "summary": "Permanently deletes all user logs",
         "description": "Delete al the logs from a user forever. This action cannot be undone. The user id will be provided by the token.",
-        "produces": [
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "header",
             "name": "Authorization",
-            "description": "You need pass the Authorization header using the Bearer schema.",
+            "description": "Provide the Authorization header using the Bearer scheme",
             "schema": {
               "type": "string",
               "required": true,
@@ -1446,101 +1021,48 @@
         "responses": {
           "200": {
             "description": "Returns the body with a message of deletation",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Deleted successfully, this action cannot be undone"
-                }
-              }
+              "$ref": "#/permanentDeletionOfAllLogs"
+            }
+          },
+          "204": {
+            "description": "Returns an empty object, signaling that there are no logs to delete",
+            "schema": {
+              "$ref": "#/noContent"
             }
           },
           "401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
+            "description": "Returns unauthorized",
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Invalid token"
-                }
-              }
+              "$ref": "#/invalidToken"
+            }
+          },
+          "403": {
+            "description": "Returns forbidden",
+            "schema": {
+              "$ref": "#/tokenNotProvided"
             }
           },
           "500": {
             "description": "Returns the message stating that an error has occurred on the server",
-            "produces": [
-              "application/json"
-            ],
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Internal Server Error"
-                }
-              }
-            }
-          },
-          "_200": {
-            "description": "Returns a message that did not find the logs",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "There are no logs"
-                }
-              }
-            }
-          },
-          "_401": {
-            "description": "Returns Unauthorized",
-            "produces": [
-              "application/json"
-            ],
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token not provided"
-                }
-              }
+              "$ref": "#/internalServerError"
             }
           }
         }
       }
     }
   },
-  "create_200": {
+  "userCreatedSuccessfully": {
     "type": "object",
     "properties": {
       "message": {
         "type": "string",
         "example": "User created successfully"
-      },
-      "data": {
-        "type": "string",
-        "example": {
-          "userName": "João da Silva",
-          "userEmail": "joao@email.com.br",
-          "createdAt": "2020-03-25T22:21:34.759Z"
-        }
       }
     }
   },
-  "create_406": {
+  "invalidData": {
     "type": "object",
     "properties": {
       "message": {
@@ -1549,7 +1071,7 @@
       }
     }
   },
-  "create_409": {
+  "userEmailAlreadyExists": {
     "type": "object",
     "properties": {
       "message": {
@@ -1558,16 +1080,97 @@
       }
     }
   },
-  "delete_200_": {
+  "internalServerError": {
     "type": "object",
     "properties": {
       "message": {
         "type": "string",
-        "example": "There is no user"
+        "example": "Internal server error"
       }
     }
   },
-  "delete_200": {
+  "token": {
+    "type": "object",
+    "properties": {
+      "token": {
+        "type": "string",
+        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOnsiaWQiOjJ9LCJpYXQiOjE1ODUxNjkwMjMsImV4cCI6MTU4NTI1NTQyM30.wgioiERBtXR6CXppvSyKV0MhFu28TKgfw94JvNEuDHA"
+      }
+    }
+  },
+  "userNotFound": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "User not found"
+      }
+    }
+  },
+  "incorrectPassword": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Incorrect password"
+      }
+    }
+  },
+  "userRestoredSuccessfully": {
+    "type": "object",
+    "properties": {
+      "token": {
+        "type": "string",
+        "example": "User restored successfully"
+      }
+    }
+  },
+  "noContent": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "{}"
+      }
+    }
+  },
+  "updatedSuccessfully": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Updated sucessfully"
+      }
+    }
+  },
+  "passwordDoesNotMatch": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Password does not match"
+      }
+    }
+  },
+  "invalidToken": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Invalid token"
+      }
+    }
+  },
+  "tokenNotProvided": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Token not provided"
+      }
+    }
+  },
+  "delete": {
     "type": "object",
     "properties": {
       "message": {
@@ -1576,57 +1179,77 @@
       }
     }
   },
-  "getByLevel_200": {
-    "type": "object",
-    "properties": {
-      "id": {
-        "type": "number",
-        "example": 1
-      },
-      "level": {
-        "type": "string",
-        "example": "WARN"
-      },
-      "description": {
-        "type": "string",
-        "example": "Application restarted"
-      },
-      "senderApplication": {
-        "type": "string",
-        "example": "Server load monitor"
-      },
-      "sendDate": {
-        "type": "string",
-        "example": "11/26/2019 15:00"
-      },
-      "environment": {
-        "type": "string",
-        "example": "homologation"
-      },
-      "UserId": {
-        "type": "number",
-        "example": 1
-      },
-      "updatedAt": {
-        "type": "date-time",
-        "example": "2020-03-26T00:21:40.039Z"
-      },
-      "createdAt": {
-        "type": "date-time",
-        "example": "2020-03-26T00:21:40.039Z"
-      }
-    }
-  },
-  "getByLevel_200_": {
+  "permanentDelete": {
     "type": "object",
     "properties": {
       "message": {
         "type": "string",
-        "example": "There are no logs"
+        "example": "Deleted successfully, this action cannot be undone"
       }
     }
   },
-  "deleteById_200": {
+  "logWithTotal": {
+    "type": "object",
+    "properties": {
+      "total": {
+        "type": "number",
+        "example": 1
+      },
+      "Logs": {
+        "type": "array",
+        "items": {
+          "$ref": "#/onlyTheLog"
+        }
+      }
+    }
+  },
+  "onlyTheLog": {
+    "type": "object",
+    "properties": {
+      "createdLog": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "level": {
+            "type": "string",
+            "example": "WARN"
+          },
+          "description": {
+            "type": "string",
+            "example": "Application restarted"
+          },
+          "senderApplication": {
+            "type": "string",
+            "example": "Application name"
+          },
+          "sendDate": {
+            "type": "string",
+            "example": "11/26/2019 15:00"
+          },
+          "environment": {
+            "type": "string",
+            "example": "homologation"
+          },
+          "UserId": {
+            "type": "number",
+            "example": 1
+          },
+          "updatedAt": {
+            "type": "date-time",
+            "example": "2020-03-26T00:21:40.039Z"
+          },
+          "createdAt": {
+            "type": "date-time",
+            "example": "2020-03-26T00:21:40.039Z"
+          }
+        }
+      }
+    }
+  },
+  "logDelete": {
     "type": "object",
     "properties": {
       "message": {
@@ -1635,21 +1258,30 @@
       }
     }
   },
-  "deleteById_200_": {
+  "deletionOfAllLogs": {
     "type": "object",
     "properties": {
       "message": {
         "type": "string",
-        "example": "There is no logs"
+        "example": "Deleted successfully"
       }
     }
   },
-  "error_500": {
+  "permanentLogDelete": {
     "type": "object",
     "properties": {
       "message": {
         "type": "string",
-        "example": "Internal Server Error"
+        "example": "Deleted successfully, this action cannot be undone"
+      }
+    }
+  },
+  "permanentDeletionOfAllLogs": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "example": "Deleted successfully, this action cannot be undone"
       }
     }
   },
@@ -1660,15 +1292,15 @@
         "id": {
           "type": "integer",
           "format": "int64",
-          "example": 123
+          "example": 1
         },
         "name": {
           "type": "string",
-          "example": "João da Silva"
+          "example": "Example User"
         },
         "email": {
           "type": "string",
-          "example": "joao@email.com.br"
+          "example": "user@email.com.br"
         },
         "password": {
           "type": "string",
@@ -1688,7 +1320,7 @@
         "id": {
           "type": "integer",
           "format": "int64",
-          "example": 321
+          "example": 1
         },
         "level": {
           "type": "string",
@@ -1710,7 +1342,7 @@
         },
         "senderApplication": {
           "type": "string",
-          "example": "Server load monitor"
+          "example": "Application name"
         },
         "sendDate": {
           "type": "string"
@@ -1725,7 +1357,7 @@
         },
         "userId": {
           "type": "integer",
-          "example": 123
+          "example": 1
         }
       },
       "required": [

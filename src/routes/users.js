@@ -3,13 +3,11 @@ const router = express.Router()
 const controller = require('../controllers/UserController')
 const { authenticate, authenticateForRestoreUser, authorizeForRestoreUser, authorize } = require('../middlewares/auth')
 
-router.get('/logs', authorize, controller.getAllLogs)
-
 router.post('/signup', controller.create)
 
 router.post('/signin', authenticate)
 
-router.post('/restore', authenticateForRestoreUser, authorizeForRestoreUser, controller.restore) // juliano
+router.post('/restore', authenticateForRestoreUser, authorizeForRestoreUser, controller.restore)
 
 router.patch('/', authorize, controller.update)
 

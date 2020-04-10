@@ -6,9 +6,9 @@
 
 ### Visualizar a documentação e consumir API 
 
-API está disponível na plataforma Heroku, para utilizar basta acessar:
+A API está disponível na plataforma Heroku, para utilizar basta acessar:
 
-[API-DOCS - Swagger](https://central-de-erros-squad3.herokuapp.com/)
+[API DOCS - Swagger](https://central-de-erros-squad3.herokuapp.com/)
 
 ## Ambiente de desenvolvimento
 

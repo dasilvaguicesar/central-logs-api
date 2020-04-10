@@ -8,6 +8,8 @@ router.get('/environment/:environment', controller.getByEnvironment)
 
 router.get('/level/:level', controller.getByLevel)
 
+router.get('/', controller.getAllLogs)
+
 router.post('/', controller.create)
 
 router.post('/restore/id/:id', controller.restoreById)
