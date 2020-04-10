@@ -8,14 +8,19 @@
 
 A API está disponível na plataforma Heroku, para utilizar basta acessar:
 
-[API DOCS - Swagger](https://central-de-erros-squad3.herokuapp.com/)
+[API DOCS - Swagger](https://api-central-de-erros.herokuapp.com/)
 
 ## Ambiente de desenvolvimento
 
 ### Download
 
 ```
-git clone https://github.com/codenation-dev/squad-3-ad-nodejs-kroton-1.git
+Clone with HTTPS 
+https://github.com/dasilvaguilhermecesar/api-central-de-erros.git
+
+Clone with SSH
+git@github.com:dasilvaguilhermecesar/api-central-de-erros.git
+
 ```
 
 ### Instalação de dependencias

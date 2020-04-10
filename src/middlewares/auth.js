@@ -30,7 +30,6 @@ module.exports = {
         return res.status(401).json({ message: 'Incorrect password' })
       }
     } catch (error) {
-      console.log(error)
       return res.status(500).json({ message: 'Internal server error' })
     }
   },
