@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "API Error Center",
+    "title": "Logs Center API",
     "description": "Store and retrieve application logs from other applications",
     "version": "1.1.1",
     "license": {
@@ -9,7 +9,7 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   },
-  "host": "api-central-de-erros.herokuapp.com",
+  "host": "api-central-de-logs.herokuapp.com",
   "basePath": "/",
   "components": {
     "securitySchemes": {
