@@ -1,6 +1,6 @@
 [![Standard - JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
-# Central de Erros
+# Central de Logs
 
 ## Ambiente de produção
 
@@ -8,7 +8,7 @@
 
 A API está disponível na plataforma Heroku, para utilizar basta acessar:
 
-[API DOCS - Swagger](https://api-central-de-erros.herokuapp.com/)
+[API DOCS - Swagger](https://api-central-de-logs.herokuapp.com/)
 
 ## Ambiente de desenvolvimento
 
@@ -16,10 +16,10 @@ A API está disponível na plataforma Heroku, para utilizar basta acessar:
 
 ```
 Clone with HTTPS 
-https://github.com/dasilvaguilhermecesar/api-central-de-erros.git
+https://github.com/guicdsantoss/central-logs-api.git
 
 Clone with SSH
-git@github.com:dasilvaguilhermecesar/api-central-de-erros.git
+git@github.com:guicdsantoss/central-logs-api.git
 
 ```
 
