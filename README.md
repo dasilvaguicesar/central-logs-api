@@ -37,13 +37,13 @@ Essa variável irá permitir que a biblioteca dotenv encontre o arquivo .env pre
 export NODE_ENV=development
 ```
 
-### Inicia o docker localmente
+### Inicia o docker local
 
 ```
 npm run docker
 ```
 
-### Rodar aplicação localmente
+### Rodar aplicação local
 
 ```
 npm start
