@@ -25,7 +25,7 @@ Em projetos modernos é cada vez mais comum o uso de arquiteturas baseadas em se
 
 A API está disponível na plataforma Heroku, para utilizar basta acessar:
 
-[API DOCS - Swagger](https://api-central-de-logs.herokuapp.com/)
+[API DOCS - Swagger](https://log-center-api.herokuapp.com/)
 
 ## Ambiente de desenvolvimento
 
@@ -33,10 +33,10 @@ A API está disponível na plataforma Heroku, para utilizar basta acessar:
 
 ```
 Clone with HTTPS 
-https://github.com/guicdsantoss/central-logs-api.git
+https://github.com/gheesezer/log-center-api.git
 
 Clone with SSH
-git@github.com:guicdsantoss/central-logs-api.git
+git@github.com:gheesezer/log-center-api.git
 
 ```
 
