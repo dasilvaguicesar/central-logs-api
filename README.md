@@ -2,6 +2,23 @@
 
 # Central de Logs
 
+## Projeto final 
+
+### Considerações
+
+Este é o Projeto Final do programa de aceleração de carreiras AceleraDev 2020 promovido pela CodeNation com foco na tecnologia Node.js e apoiado pela empresa Cogna Educacão.
+
+### Equipe
+
+- Guilherme Cesar
+- Henrique Detoni
+- Juiliano Freire Ribeiro
+- Luane Caroline Aquino Cavalcanti
+
+### Objetivo
+
+Em projetos modernos é cada vez mais comum o uso de arquiteturas baseadas em serviços ou microsserviços. Nestes ambientes complexos, erros podem surgir em diferentes camadas da aplicação (backend, frontend, mobile, desktop) e mesmo em serviços distintos. Desta forma, é muito importante que os desenvolvedores possam centralizar todos os registros de erros em um local, de onde podem monitorar e tomar decisões mais acertadas. Neste projeto implementamos um sistema para centralizar registros de erros de aplicações.
+
 ## Ambiente de produção
 
 ### Visualizar a documentação e consumir API 
@@ -54,23 +71,6 @@ npm start
 Com o servidor local rodando basta acessar:
 
 [API DOCS - Swagger](http://localhost:8080/api-docs)
-
-## Projeto final 
-
-### Considerações
-
-Este é o Projeto Final do programa de aceleração de carreiras AceleraDev, promovido pela CodeNation com foco na tecnologia Node.js e apoiado pela empresa Kroton Educacional.
-
-### Equipe
-
-- Guilherme Cesar
-- Henrique Detoni
-- Juiliano Freire Ribeiro
-- Luane Caroline Aquino Cavalcanti
-
-### Objetivo
-
-Em projetos modernos é cada vez mais comum o uso de arquiteturas baseadas em serviços ou microsserviços. Nestes ambientes complexos, erros podem surgir em diferentes camadas da aplicação (backend, frontend, mobile, desktop) e mesmo em serviços distintos. Desta forma, é muito importante que os desenvolvedores possam centralizar todos os registros de erros em um local, de onde podem monitorar e tomar decisões mais acertadas. Neste projeto implementamos um sistema para centralizar registros de erros de aplicações.
 
 ### Tecnologias utilizadas
 
