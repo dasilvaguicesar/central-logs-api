@@ -19,24 +19,16 @@ Este é o Projeto Final do programa de aceleração de carreiras AceleraDev 2020
 
 Em projetos modernos é cada vez mais comum o uso de arquiteturas baseadas em serviços ou microsserviços. Nestes ambientes complexos, erros podem surgir em diferentes camadas da aplicação (backend, frontend, mobile, desktop) e mesmo em serviços distintos. Desta forma, é muito importante que os desenvolvedores possam centralizar todos os registros de erros em um local, de onde podem monitorar e tomar decisões mais acertadas. Neste projeto implementamos um sistema para centralizar registros de erros de aplicações.
 
-## Ambiente de produção
-
-### Visualizar a documentação e consumir API 
-
-A API está disponível na plataforma Heroku, para utilizar basta acessar:
-
-[API DOCS - Swagger](https://log-center-api.herokuapp.com/)
-
 ## Ambiente de desenvolvimento
 
 ### Download
 
 ```
 Clone with HTTPS 
-https://github.com/gheesezer/log-center-api.git
+https://github.com/gheezzer/log-center-api.git
 
 Clone with SSH
-git@github.com:gheesezer/log-center-api.git
+git@github.com:gheezzer/log-center-api.git
 
 ```
 
